@@ -71,6 +71,7 @@
     <PostBuildEvent>copy /Y "$(TargetPath)" "$(SolutionDir)\..\lib\KeePass"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>powershell.exe "$(SolutionDir)\..\Get-KeePassLib.ps1"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>

@@ -87,6 +87,7 @@
             this.applicationBrowse.TabIndex = 3;
             this.applicationBrowse.Text = "Browse...";
             this.applicationBrowse.UseVisualStyleBackColor = true;
+            this.applicationBrowse.Click += new System.EventHandler(this.applicationBrowse_Click);
             // 
             // application
             // 
@@ -116,6 +117,7 @@
             this.enableRunAs.TabIndex = 0;
             this.enableRunAs.Text = "Enable Run As";
             this.enableRunAs.UseVisualStyleBackColor = true;
+            this.enableRunAs.CheckedChanged += new System.EventHandler(this.enableRunAs_CheckedChanged);
             // 
             // RunAsOptions
             // 
