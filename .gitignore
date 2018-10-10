@@ -427,3 +427,10 @@ ASALocalRun/
 
 
 # End of https://www.gitignore.io/api/git,linux,macos,windows,visualstudio,visualstudiocode
+
+####################
+# Custom Additions #
+####################
+
+lib/
+*.plgx
