@@ -13,7 +13,7 @@ namespace RunAsPlugin
         {
             m_host = host;
 
-            this.windowMonitor = new WindowMonitor();
+            this.windowMonitor = new WindowMonitor(host.Database);
 
             return true;
         }

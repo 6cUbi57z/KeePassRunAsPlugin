@@ -1,12 +1,17 @@
 ﻿using KeePass.Forms;
 using KeePass.UI;
+using KeePassLib;
 
 namespace RunAsPlugin.UI
 {
     internal class WindowMonitor
     {
-        internal WindowMonitor()
+        private readonly PwDatabase database;
+
+        internal WindowMonitor(PwDatabase database)
         {
+            this.database = database;
+
             GlobalWindowManager.WindowAdded += this.WindowCreated;
         }
 
@@ -21,7 +26,11 @@ namespace RunAsPlugin.UI
 
         private void PasswordEntryFormShown(object sender, System.EventArgs e)
         {
-            new RunAsTab((PwEntryForm)sender);
+            PwEntryForm form = (PwEntryForm)sender;
+
+            PasswordEntryManager passwordEntryManager = new PasswordEntryManager(database, form);
+
+            new RunAsTab((PwEntryForm)sender, passwordEntryManager);
         }
     }
 }

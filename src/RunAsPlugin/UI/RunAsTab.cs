@@ -8,13 +8,17 @@ namespace RunAsPlugin.UI
         private const string TAB_TITLE = "Run As";
         private const string TAB_CONTAINER_NAME = "m_tabMain";
 
-        internal RunAsTab(PwEntryForm container)
+        private readonly PasswordEntryManager passwordEntryManager;
+
+        internal RunAsTab(PwEntryForm container, PasswordEntryManager passwordEntryManager)
             : base(TAB_TITLE)
         {
+            this.passwordEntryManager = passwordEntryManager;
+
             TabControl tabContainer = this.GetTabContainer(container);
             tabContainer.Controls.Add(this);
 
-            RunAsOptions optionsControl = new RunAsOptions(container);
+            RunAsOptions optionsControl = new RunAsOptions(container, this.passwordEntryManager);
             optionsControl.Dock = DockStyle.Fill;
             this.Controls.Add(optionsControl);
         }

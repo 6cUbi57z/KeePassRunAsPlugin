@@ -65,6 +65,7 @@
             this.setIcon.TabIndex = 5;
             this.setIcon.Text = "Set Entry Icon from Application";
             this.setIcon.UseVisualStyleBackColor = true;
+            this.setIcon.Click += new System.EventHandler(this.setIcon_Click);
             // 
             // netOnly
             // 
@@ -76,7 +77,6 @@
             this.netOnly.TabIndex = 4;
             this.netOnly.Text = "Use Credentials for Network Only";
             this.netOnly.UseVisualStyleBackColor = true;
-            this.netOnly.CheckedChanged += new System.EventHandler(this.netOnly_CheckedChanged);
             // 
             // applicationBrowse
             // 
@@ -99,7 +99,6 @@
             this.application.Name = "application";
             this.application.Size = new System.Drawing.Size(260, 20);
             this.application.TabIndex = 2;
-            this.application.TextChanged += new System.EventHandler(this.application_TextChanged);
             // 
             // applicationLabel
             // 

@@ -1,7 +1,6 @@
 ﻿using System.Windows.Forms;
 using KeePass.Forms;
-using KeePassLib.Collections;
-using KeePassLib.Security;
+using RunAsPlugin.Models;
 
 namespace RunAsPlugin.UI
 {
@@ -9,51 +8,27 @@ namespace RunAsPlugin.UI
     {
         private const string BROWSE_APPLICATION_FILTER = "Application (*.exe)|*.exe|All files (*.*)|*.*";
 
-        private ProtectedStringDictionary entryStrings;
+        private readonly PasswordEntryManager passwordEntryManager;
 
-        public RunAsOptions(PwEntryForm container)
+        private RunAsEntrySettings settings;
+
+        public RunAsOptions(PwEntryForm container, PasswordEntryManager passwordEntryManager)
         {
             InitializeComponent();
 
-            this.entryStrings = container.EntryStrings;
+            this.passwordEntryManager = passwordEntryManager;
 
             this.LoadSettings();
+
+            container.EntrySaving += this.Container_EntrySaving;
         }
 
-        private void enableRunAs_CheckedChanged(object sender, System.EventArgs e)
+        private void Container_EntrySaving(object sender, KeePass.Util.CancellableOperationEventArgs e)
         {
-            bool isChecked = ((CheckBox)sender).Checked;
-
-            ProtectedString protectedString = new ProtectedString(false, isChecked.ToString());
-            this.entryStrings.Set(FieldNames.IsEnabled, protectedString);
-
-            this.SetEnabledStateOfControls(isChecked);
+            this.SaveSettings();
         }
 
-        private void application_TextChanged(object sender, System.EventArgs e)
-        {
-            string application = ((TextBox)sender).Text;
-
-            ProtectedString protectedString = new ProtectedString(false, application);
-            this.entryStrings.Set(FieldNames.Application, protectedString);
-        }
-
-        private void netOnly_CheckedChanged(object sender, System.EventArgs e)
-        {
-            bool isChecked = ((CheckBox)sender).Checked;
-
-            ProtectedString protectedString = new ProtectedString(false, isChecked.ToString());
-            this.entryStrings.Set(FieldNames.NetOnly, protectedString);
-        }
-
-        private void SetEnabledStateOfControls(bool enabledState)
-        {
-            this.application.Enabled = enabledState;
-            this.applicationBrowse.Enabled = enabledState;
-            this.netOnly.Enabled = enabledState;
-            this.setIcon.Enabled = enabledState;
-        }
-
+        #region UI Events
         private void applicationBrowse_Click(object sender, System.EventArgs e)
         {
             string currentApplication = this.application.Text;
@@ -73,20 +48,48 @@ namespace RunAsPlugin.UI
             }
         }
 
+        private void enableRunAs_CheckedChanged(object sender, System.EventArgs e)
+        {
+            bool isChecked = ((CheckBox)sender).Checked;
+            this.SetEnabledStateOfControls(isChecked);
+        }
+
+        private void setIcon_Click(object sender, System.EventArgs e)
+        {
+
+        }
+        #endregion
+
+        private void SetEnabledStateOfControls(bool enabledState)
+        {
+            this.application.Enabled = enabledState;
+            this.applicationBrowse.Enabled = enabledState;
+            this.netOnly.Enabled = enabledState;
+            this.setIcon.Enabled = enabledState;
+        }
+
         private void LoadSettings()
         {
-            string isEnabledString = this.entryStrings.Get(FieldNames.IsEnabled)?.ReadString();
-            string application = this.entryStrings.Get(FieldNames.Application)?.ReadString();
-            string isNetOnlyString = this.entryStrings.Get(FieldNames.NetOnly)?.ReadString();
+            this.settings = this.passwordEntryManager.GetRunAsSettings();
 
-            bool.TryParse(isEnabledString, out bool isEnabled);
-            bool.TryParse(isNetOnlyString, out bool isNetOnly);
+            this.enableRunAs.Checked = this.settings.IsEnabled;
+            this.application.Text = this.settings.Application;
+            this.netOnly.Checked = this.settings.IsNetOnly;
 
-            this.enableRunAs.Checked = isEnabled;
-            this.application.Text = application;
-            this.netOnly.Checked = isNetOnly;
+            this.SetEnabledStateOfControls(this.settings.IsEnabled);
+        }
 
-            this.SetEnabledStateOfControls(isEnabled);
+        private void SaveSettings()
+        {
+            bool isEnabled = this.enableRunAs.Checked;
+            string application = this.application.Text;
+            bool isNetOnly = this.netOnly.Checked;
+
+            this.settings.IsEnabled = isEnabled;
+            this.settings.Application = application;
+            this.settings.IsNetOnly = isNetOnly;
+
+            this.passwordEntryManager.SetRunAsSettings(this.settings);
         }
     }
 }
