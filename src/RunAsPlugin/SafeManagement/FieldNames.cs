@@ -1,4 +1,4 @@
-﻿namespace RunAsPlugin
+﻿namespace RunAsPlugin.SafeManagement
 {
     internal static class FieldNames
     {

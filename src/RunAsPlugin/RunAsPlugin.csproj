@@ -54,8 +54,8 @@
     <Compile Include="Executor\LogonTypeProviders\ILogonTypeProvider.cs" />
     <Compile Include="Executor\LogonTypeProviders\LogonTypeProvider.cs" />
     <Compile Include="Models\ImpersonationSettings.cs" />
-    <Compile Include="PasswordEntryManager.cs" />
-    <Compile Include="FieldNames.cs" />
+    <Compile Include="SafeManagement\PasswordEntryManager.cs" />
+    <Compile Include="SafeManagement\FieldNames.cs" />
     <Compile Include="Models\RunAsEntrySettings.cs" />
     <Compile Include="RunAsPluginExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -4,7 +4,7 @@ using KeePassLib.Collections;
 using KeePassLib.Security;
 using RunAsPlugin.Models;
 
-namespace RunAsPlugin
+namespace RunAsPlugin.SafeManagement
 {
     public class PasswordEntryManager
     {

@@ -1,6 +1,7 @@
 ﻿using KeePass.Forms;
 using KeePass.UI;
 using KeePassLib;
+using RunAsPlugin.SafeManagement;
 
 namespace RunAsPlugin.UI
 {

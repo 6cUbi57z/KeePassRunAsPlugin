@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using KeePassLib;
 using RunAsPlugin.Models;
+using RunAsPlugin.SafeManagement;
 
 namespace RunAsPlugin.Executor
 {

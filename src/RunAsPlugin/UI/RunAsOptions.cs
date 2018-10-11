@@ -1,6 +1,7 @@
 ﻿using System.Windows.Forms;
 using KeePass.Forms;
 using RunAsPlugin.Models;
+using RunAsPlugin.SafeManagement;
 
 namespace RunAsPlugin.UI
 {
