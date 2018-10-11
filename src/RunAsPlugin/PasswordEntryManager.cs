@@ -1,5 +1,6 @@
 ﻿using KeePass.Forms;
 using KeePassLib;
+using KeePassLib.Collections;
 using KeePassLib.Security;
 using RunAsPlugin.Models;
 
@@ -8,19 +9,24 @@ namespace RunAsPlugin
     public class PasswordEntryManager
     {
         private readonly PwDatabase database;
-        private readonly PwEntryForm entryForm;
+        private readonly ProtectedStringDictionary entryStrings;
 
         internal PasswordEntryManager(PwDatabase database, PwEntryForm entryForm)
         {
             this.database = database;
-            this.entryForm = entryForm;
+            this.entryStrings = entryForm.EntryStrings;
+        }
+
+        internal PasswordEntryManager(PwEntry entry)
+        {
+            this.entryStrings = entry.Strings;
         }
 
         internal RunAsEntrySettings GetRunAsSettings()
         {
-            bool isEnabled = this.GetBool(FieldNames.IsEnabled);
-            string application = this.GetString(FieldNames.Application);
-            bool isNetOnly = this.GetBool(FieldNames.NetOnly);
+            bool isEnabled = this.GetBool(FieldNames.RunAs.IsEnabled);
+            string application = this.GetString(FieldNames.RunAs.Application);
+            bool isNetOnly = this.GetBool(FieldNames.RunAs.NetOnly);
 
             return new RunAsEntrySettings()
             {
@@ -32,25 +38,40 @@ namespace RunAsPlugin
 
         internal void SetRunAsSettings(RunAsEntrySettings settings)
         {
-            this.SetString(FieldNames.IsEnabled, settings.IsEnabled);
-            this.SetString(FieldNames.Application, settings.Application);
-            this.SetString(FieldNames.NetOnly, settings.IsNetOnly);
+            this.SetString(FieldNames.RunAs.IsEnabled, settings.IsEnabled);
+            this.SetString(FieldNames.RunAs.Application, settings.Application);
+            this.SetString(FieldNames.RunAs.NetOnly, settings.IsNetOnly);
+        }
+
+        internal string GetTitle()
+        {
+            return this.entryStrings.ReadSafe(FieldNames.Title);
+        }
+
+        internal ImpersonationSettings GetImpersonationSettings()
+        {
+            return new ImpersonationSettings()
+            {
+                FullUsername = this.entryStrings.ReadSafe(FieldNames.Username),
+                Password = this.entryStrings.Get(FieldNames.Password),
+                NetOnly = this.GetBool(FieldNames.RunAs.NetOnly)
+            };
         }
 
         private void SetString(string field, object value)
         {
             ProtectedString protectedString = new ProtectedString(false, value.ToString());
-            this.entryForm.EntryStrings.Set(field, protectedString);
+            this.entryStrings.Set(field, protectedString);
         }
 
         private string GetString(string field)
         {
-            return this.entryForm.EntryStrings.Get(field)?.ReadString();
+            return this.entryStrings.Get(field)?.ReadString();
         }
 
         private bool GetBool(string field)
         {
-            string stringValue = this.entryForm.EntryStrings.Get(field)?.ReadString();
+            string stringValue = this.entryStrings.Get(field)?.ReadString();
             bool.TryParse(stringValue, out bool boolValue);
             return boolValue;
         }

@@ -15,6 +15,9 @@ namespace RunAsPlugin
 
             this.windowMonitor = new WindowMonitor(host.Database);
 
+            RunAsMenuItem runAsMenuItem = new RunAsMenuItem(host.MainWindow);
+            host.MainWindow.EntryContextMenu.Items.Add(runAsMenuItem);
+
             return true;
         }
     }
