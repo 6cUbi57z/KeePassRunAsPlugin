@@ -1,18 +1,36 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using KeePass.Forms;
 using RunAsPlugin.Models;
 using RunAsPlugin.SafeManagement;
 
 namespace RunAsPlugin.UI
 {
+    /// <summary>
+    /// Run As Options control for the password entry form.
+    /// </summary>
     public partial class RunAsOptions : UserControl
     {
+        /// <summary>
+        /// The filter options available in the browse dialog.
+        /// </summary>
         private const string BROWSE_APPLICATION_FILTER = "Application (*.exe)|*.exe|All files (*.*)|*.*";
 
+        /// <summary>
+        /// The manager used for interacting with the open password entry.
+        /// </summary>
         private readonly PasswordEntryManager passwordEntryManager;
 
+        /// <summary>
+        /// The run as settings displayed in the control.
+        /// </summary>
         private RunAsEntrySettings settings;
 
+        /// <summary>
+        /// Default contructor.
+        /// </summary>
+        /// <param name="container">The password entry form.</param>
+        /// <param name="passwordEntryManager">The manager used for interacting with the open password entry.</param>
         public RunAsOptions(PwEntryForm container, PasswordEntryManager passwordEntryManager)
         {
             InitializeComponent();
@@ -24,12 +42,22 @@ namespace RunAsPlugin.UI
             container.EntrySaving += this.Container_EntrySaving;
         }
 
+        /// <summary>
+        /// Event handler triggered when the password entry is being saved.
+        /// </summary>
+        /// <param name="sender">The object which triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void Container_EntrySaving(object sender, KeePass.Util.CancellableOperationEventArgs e)
         {
             this.SaveSettings();
         }
 
         #region UI Events
+        /// <summary>
+        /// Event handler triggered when the browse button is clicked.
+        /// </summary>
+        /// <param name="sender">The object which triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void applicationBrowse_Click(object sender, System.EventArgs e)
         {
             string currentApplication = this.application.Text;
@@ -49,26 +77,43 @@ namespace RunAsPlugin.UI
             }
         }
 
+        /// <summary>
+        /// Event handler triggered when enable run as checkbox is toggled.
+        /// </summary>
+        /// <param name="sender">The object which triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void enableRunAs_CheckedChanged(object sender, System.EventArgs e)
         {
             bool isChecked = ((CheckBox)sender).Checked;
-            this.SetEnabledStateOfControls(isChecked);
+            this.SetRunAsEnabledState(isChecked);
         }
 
+        /// <summary>
+        /// Event handler triggered when the set icon button is clicked.
+        /// </summary>
+        /// <param name="sender">The object which triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
         private void setIcon_Click(object sender, System.EventArgs e)
         {
-
+            throw new NotImplementedException();
         }
         #endregion
 
-        private void SetEnabledStateOfControls(bool enabledState)
+        /// <summary>
+        /// Changes the state of the controls based on the enabled status of "Run As".
+        /// </summary>
+        /// <param name="isEnabled">The enabled status of "Run As".</param>
+        private void SetRunAsEnabledState(bool isEnabled)
         {
-            this.application.Enabled = enabledState;
-            this.applicationBrowse.Enabled = enabledState;
-            this.netOnly.Enabled = enabledState;
-            this.setIcon.Enabled = enabledState;
+            this.application.Enabled = isEnabled;
+            this.applicationBrowse.Enabled = isEnabled;
+            this.netOnly.Enabled = isEnabled;
+            this.setIcon.Enabled = isEnabled;
         }
 
+        /// <summary>
+        /// Load the settings from the password entry manager in to the <see cref="this.settings"/> property and the control fields.
+        /// </summary>
         private void LoadSettings()
         {
             this.settings = this.passwordEntryManager.GetRunAsSettings();
@@ -77,9 +122,12 @@ namespace RunAsPlugin.UI
             this.application.Text = this.settings.Application;
             this.netOnly.Checked = this.settings.IsNetOnly;
 
-            this.SetEnabledStateOfControls(this.settings.IsEnabled);
+            this.SetRunAsEnabledState(this.settings.IsEnabled);
         }
 
+        /// <summary>
+        /// Updates the settings in the <see cref="this.settings"/> property and password entry from the control fields.
+        /// </summary>
         private void SaveSettings()
         {
             bool isEnabled = this.enableRunAs.Checked;

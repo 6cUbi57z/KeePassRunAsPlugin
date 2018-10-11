@@ -2,10 +2,23 @@
 
 namespace RunAsPlugin.Models
 {
+    /// <summary>
+    /// Settings to be used when impersonating.
+    /// </summary>
     public class ImpersonationSettings
     {
+        /// <summary>
+        /// The fully qualified domain name of the user.
+        /// </summary>
+        /// <example>
+        /// * MyDomain\MyUsername
+        /// * MyUsername@MyDomain
+        /// </example>
         public string FullUsername { get; set; }
 
+        /// <summary>
+        /// The username part of the credentials.
+        /// </summary>
         public string Username
         {
             get
@@ -25,6 +38,9 @@ namespace RunAsPlugin.Models
             }
         }
 
+        /// <summary>
+        /// The domain part of the credentials.
+        /// </summary>
         public string Domain
         {
             get
@@ -44,8 +60,20 @@ namespace RunAsPlugin.Models
             }
         }
 
+        /// <summary>
+        /// The password for the credentials.
+        /// </summary>
+        /// <remarks>
+        /// This is kept as a <see cref="ProtectedString"/> so that the contents remain protected in memory.
+        /// </remarks>
         public ProtectedString Password { get; set; }
 
+        /// <summary>
+        /// Determines if the impersonation should use the "Net Only" option.
+        /// </summary>
+        /// <remarks>
+        /// This executes the application using the current user's credentials but will use the impersonated credentials for network requests.
+        /// </remarks>
         public bool NetOnly { get; set; }
     }
 }
