@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using KeePass.Forms;
 using KeePassLib;
 using RunAsPlugin.Execution;
+using RunAsPlugin.SafeManagement;
 
 namespace RunAsPlugin.UI
 {
@@ -47,21 +48,27 @@ namespace RunAsPlugin.UI
 
             foreach (PwEntry entry in selectedEntries)
             {
+                PasswordEntryManager entryManager = new PasswordEntryManager(entry);
+
                 try
                 {
                     // Create and run an executor for the password entry.
-                    ApplicationExecutor executor = new ApplicationExecutor(entry);
+                    ApplicationExecutor executor = new ApplicationExecutor(entryManager);
                     executor.Run();
                 }
-                catch (Exception ex)
+                catch (ApplicationExecutionException ex)
                 {
                     // If there was an error, display a suitable error message.
-                    // TODO: Make exception more specific
-                    // TODO: Log error
+                    string errorMessage = string.Concat(
+                        "Unable to execute application for password entry '", entryManager.GetTitle(), "':",
+                        Environment.NewLine,
+                        Environment.NewLine,
+                        ex.Message);
+
                     MessageBox.Show(
                         this.mainWindow,
-                        ex.Message,
-                        "Error",
+                        errorMessage,
+                        "Run As Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }

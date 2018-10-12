@@ -42,6 +42,17 @@ namespace RunAsPlugin.Execution.Impersonation
                     throw new Win32Exception(Marshal.GetLastWin32Error());
                 }
             }
+            catch (Win32Exception ex)
+            {
+                string errorMessage = ex.Message;
+
+                if ("A logon request contained an invalid logon type value".Equals(errorMessage))
+                {
+                    errorMessage = string.Concat(errorMessage, ". This is usually caused by attempting to use credentials for the network only but not specifying a domain.");
+                }
+
+                throw new ApplicationExecutionException(errorMessage, ex);
+            }
             finally
             {
                 if (processInfo.process != IntPtr.Zero)

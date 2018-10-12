@@ -58,6 +58,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Execution\ApplicationExecutionException.cs" />
     <Compile Include="Execution\ApplicationExecutor.cs" />
     <Compile Include="Execution\Impersonation\IImpersonationHandler.cs" />
     <Compile Include="Execution\Impersonation\NativeCallImpersonationHandler.cs" />

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
-using KeePassLib;
 using RunAsPlugin.Execution.Impersonation;
 using RunAsPlugin.Models;
 using RunAsPlugin.SafeManagement;
@@ -13,9 +11,9 @@ namespace RunAsPlugin.Execution
         private readonly PasswordEntryManager entryManager;
         private readonly RunAsEntrySettings settings;
 
-        internal ApplicationExecutor(PwEntry entry)
+        internal ApplicationExecutor(PasswordEntryManager entryManager)
         {
-            this.entryManager = new PasswordEntryManager(entry);
+            this.entryManager = entryManager;
             this.settings = this.entryManager.GetRunAsSettings();
         }
 
@@ -23,39 +21,36 @@ namespace RunAsPlugin.Execution
         {
             if (!this.settings.IsEnabled)
             {
-                string errorMessage = this.GetErrorMessage("Run As command not enabled");
-                throw new Exception(errorMessage);
+                throw new ApplicationExecutionException("Run As command not enabled.");
             }
 
             if (!File.Exists(this.settings.Application))
             {
-                string errorMessage = this.GetErrorMessage("Executable '", this.settings.Application, "' could be found");
-                throw new FileNotFoundException(errorMessage);
+                string errorMessage = string.Concat("Executable '", this.settings.Application, "' could be found.");
+                throw new ApplicationExecutionException(errorMessage);
             }
 
             ExecutionSettings impersonationSettings = this.entryManager.GetExecutionSettings();
 
             if (string.IsNullOrWhiteSpace(impersonationSettings.Username))
             {
-                string errorMessage = this.GetErrorMessage("No username present");
-                throw new FileNotFoundException(errorMessage);
+                throw new ApplicationExecutionException("No username present.");
             }
 
             if (impersonationSettings.Password.IsEmpty)
             {
-                string errorMessage = this.GetErrorMessage("No username present");
-                throw new FileNotFoundException(errorMessage);
+                throw new ApplicationExecutionException("No password present.");
             }
 
-            IImpersonationHandler impersonation = new NativeCallImpersonationHandler();
-            impersonation.ExecuteApplication(this.settings.Application, impersonationSettings);
-        }
-
-        private string GetErrorMessage(params string[] args)
-        {
-            string[] argsToAdd = new string[] { " for password entry '", this.entryManager.GetTitle(), "'." };
-            string[] allArgs = args.Concat(argsToAdd).ToArray();
-            return string.Concat(allArgs);
+            try
+            {
+                IImpersonationHandler impersonation = new NativeCallImpersonationHandler();
+                impersonation.ExecuteApplication(this.settings.Application, impersonationSettings);
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationExecutionException(ex.Message, ex);
+            }
         }
     }
 }
