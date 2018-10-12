@@ -26,7 +26,7 @@ namespace RunAsPlugin
             contextMenu.Items.Add(new ToolStripSeparator());
 
             RunAsMenuItem runAsMenuItem = new RunAsMenuItem(host.MainWindow);
-            host.MainWindow.EntryContextMenu.Items.Add(runAsMenuItem);
+            runAsMenuItem.AddToContextMenu(host.MainWindow.EntryContextMenu);
 
             // Return true for a successful startup.
             return true;
