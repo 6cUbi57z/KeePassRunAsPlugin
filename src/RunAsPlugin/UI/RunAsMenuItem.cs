@@ -53,7 +53,7 @@ namespace RunAsPlugin.UI
         {
             PwEntry[] selectedEntries = this.mainWindow.GetSelectedEntries();
 
-            if (selectedEntries.Length == 0)
+            if (selectedEntries == null || selectedEntries.Length == 0)
             {
                 this.Enabled = false;
             }

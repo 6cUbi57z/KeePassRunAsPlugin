@@ -63,6 +63,7 @@
     <Compile Include="Execution\Impersonation\IImpersonationHandler.cs" />
     <Compile Include="Execution\Impersonation\NativeCallImpersonationHandler.cs" />
     <Compile Include="Models\ExecutionSettings.cs" />
+    <Compile Include="SafeManagement\ExecutableIcon.cs" />
     <Compile Include="SafeManagement\PasswordEntryManager.cs" />
     <Compile Include="SafeManagement\FieldNames.cs" />
     <Compile Include="Models\RunAsEntrySettings.cs" />
