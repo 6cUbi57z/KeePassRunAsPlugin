@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using KeePassLib;
+using RunAsPlugin.Execution.Impersonation;
 using RunAsPlugin.Models;
 using RunAsPlugin.SafeManagement;
 
-namespace RunAsPlugin.Executor
+namespace RunAsPlugin.Execution
 {
     internal class ApplicationExecutor
     {
@@ -19,7 +19,7 @@ namespace RunAsPlugin.Executor
             this.settings = this.entryManager.GetRunAsSettings();
         }
 
-        internal void Run()
+        public void Run()
         {
             if (!this.settings.IsEnabled)
             {
@@ -33,7 +33,7 @@ namespace RunAsPlugin.Executor
                 throw new FileNotFoundException(errorMessage);
             }
 
-            ImpersonationSettings impersonationSettings = this.entryManager.GetImpersonationSettings();
+            ExecutionSettings impersonationSettings = this.entryManager.GetExecutionSettings();
 
             if (string.IsNullOrWhiteSpace(impersonationSettings.Username))
             {
@@ -47,10 +47,8 @@ namespace RunAsPlugin.Executor
                 throw new FileNotFoundException(errorMessage);
             }
 
-            using (ImpersonationContext impersonator = new ImpersonationContext(impersonationSettings))
-            {
-                Process.Start(this.settings.Application);
-            }
+            IImpersonationHandler impersonation = new NativeCallImpersonationHandler();
+            impersonation.ExecuteApplication(this.settings.Application, impersonationSettings);
         }
 
         private string GetErrorMessage(params string[] args)

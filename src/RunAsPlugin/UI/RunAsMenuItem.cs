@@ -2,7 +2,7 @@
 using System.Windows.Forms;
 using KeePass.Forms;
 using KeePassLib;
-using RunAsPlugin.Executor;
+using RunAsPlugin.Execution;
 
 namespace RunAsPlugin.UI
 {

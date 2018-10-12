@@ -83,12 +83,12 @@ namespace RunAsPlugin.SafeManagement
         }
 
         /// <summary>
-        /// Gets the impersonation settings from the password entry.
+        /// Gets the execution settings from the password entry.
         /// </summary>
-        /// <returns>The impersonation settings for the entry.</returns>
-        internal ImpersonationSettings GetImpersonationSettings()
+        /// <returns>The execution settings for the entry.</returns>
+        internal ExecutionSettings GetExecutionSettings()
         {
-            return new ImpersonationSettings()
+            return new ExecutionSettings()
             {
                 FullUsername = this.entryStrings.ReadSafe(FieldNames.Username),
                 Password = this.entryStrings.Get(FieldNames.Password),
