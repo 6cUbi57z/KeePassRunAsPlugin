@@ -5,7 +5,7 @@ Param(
     [string]$DllPath
 )
 
-Set-Variable -Name "VersionFile" -Value (Join-Path $PSScriptRoot "Version.txt") -Option ReadOnly -Force
+Set-Variable -Name "VersionFile" -Value (Join-Path $PSScriptRoot "..\Version.txt") -Option ReadOnly -Force
 
 try {
     # Ensure the DLL exists

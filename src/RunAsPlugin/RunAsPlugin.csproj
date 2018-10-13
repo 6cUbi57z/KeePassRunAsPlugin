@@ -86,7 +86,7 @@
   <PropertyGroup>
     <PostBuildEvent>copy /Y "$(TargetPath)" "$(SolutionDir)\..\lib\KeePass"
 
-powershell "$(SolutionDir)\..\Set-VersionInUpdateFile.ps1" -DllPath "$(TargetPath)"</PostBuildEvent>
+powershell "$(SolutionDir)\..\build\Set-VersionInUpdateFile.ps1" -DllPath "$(TargetPath)"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>
