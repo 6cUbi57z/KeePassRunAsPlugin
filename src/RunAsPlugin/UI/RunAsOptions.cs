@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Windows.Forms;
 using KeePass.Forms;
+using KeePassLib;
 using RunAsPlugin.Models;
 using RunAsPlugin.SafeManagement;
+using RunAsPlugin.UI.EventArgs;
 
 namespace RunAsPlugin.UI
 {
@@ -11,6 +13,8 @@ namespace RunAsPlugin.UI
     /// </summary>
     public partial class RunAsOptions : UserControl
     {
+        public event EventHandler<IconUpdatedEventArgs> EntryIconUpdated;
+
         /// <summary>
         /// The filter options available in the browse dialog.
         /// </summary>
@@ -29,17 +33,16 @@ namespace RunAsPlugin.UI
         /// <summary>
         /// Default contructor.
         /// </summary>
-        /// <param name="container">The password entry form.</param>
+        /// <param name="entryForm">The password entry form.</param>
         /// <param name="passwordEntryManager">The manager used for interacting with the open password entry.</param>
-        public RunAsOptions(PwEntryForm container, PasswordEntryManager passwordEntryManager)
+        public RunAsOptions(PwEntryForm entryForm, PasswordEntryManager passwordEntryManager)
         {
             InitializeComponent();
 
             this.passwordEntryManager = passwordEntryManager;
 
             this.LoadSettings();
-
-            container.EntrySaving += this.Container_EntrySaving;
+            entryForm.EntrySaving += this.Container_EntrySaving;
         }
 
         /// <summary>
@@ -95,7 +98,11 @@ namespace RunAsPlugin.UI
         /// <param name="e">The event arguments.</param>
         private void setIcon_Click(object sender, System.EventArgs e)
         {
-            throw new NotImplementedException();
+            string application = this.application.Text;
+            PwCustomIcon customIcon = this.passwordEntryManager.SetIconFromExecutable(application);
+
+            IconUpdatedEventArgs eventArgs = new IconUpdatedEventArgs(customIcon);
+            this.EntryIconUpdated?.Invoke(this, eventArgs);
         }
         #endregion
 

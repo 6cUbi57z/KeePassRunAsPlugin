@@ -1,6 +1,8 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using KeePass.Forms;
 using RunAsPlugin.SafeManagement;
+using RunAsPlugin.UI.EventArgs;
 
 namespace RunAsPlugin.UI
 {
@@ -9,6 +11,8 @@ namespace RunAsPlugin.UI
     /// </summary>
     internal class RunAsTab : TabPage
     {
+        public event EventHandler<IconUpdatedEventArgs> EntryIconUpdated;
+
         /// <summary>
         /// The text to display on the tab.
         /// </summary>
@@ -40,8 +44,13 @@ namespace RunAsPlugin.UI
 
             // Add the run as options to this tab page.
             RunAsOptions optionsControl = new RunAsOptions(container, this.passwordEntryManager);
+            optionsControl.EntryIconUpdated += this.OptionsControl_EntryIconUpdated;
             optionsControl.Dock = DockStyle.Fill;
-            this.Controls.Add(optionsControl);
+        }
+
+        private void OptionsControl_EntryIconUpdated(object sender, IconUpdatedEventArgs e)
+        {
+            this.EntryIconUpdated?.Invoke(sender, e);
         }
 
         /// <summary>
