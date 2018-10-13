@@ -11,6 +11,8 @@ namespace RunAsPlugin
     {
         private WindowMonitor windowMonitor;
 
+        public override string UpdateUrl => "https://raw.githubusercontent.com/dale2507/KeePassRunAsPlugin/master/Version.txt";
+
         /// <summary>
         /// Initialises the plugin.
         /// </summary>
