@@ -1,7 +1,12 @@
-﻿using KeePass.Forms;
+﻿using System;
+using System.Reflection;
+using System.Windows.Forms;
+using KeePass.Forms;
 using KeePass.Plugins;
 using KeePass.UI;
 using RunAsPlugin.SafeManagement;
+using RunAsPlugin.UI.EventArgs;
+using RunAsPlugin.Utils;
 
 namespace RunAsPlugin.UI
 {
@@ -50,7 +55,51 @@ namespace RunAsPlugin.UI
 
             PasswordEntryManager passwordEntryManager = new PasswordEntryManager(this.host.Database, form);
 
-            new RunAsTab((PwEntryForm)sender, passwordEntryManager);
+            RunAsTab runAsTab = new RunAsTab((PwEntryForm)sender, passwordEntryManager);
+            runAsTab.EntryIconUpdated += this.RunAsTab_EntryIconUpdated;
+        }
+
+        private void RunAsTab_EntryIconUpdated(object sender, IconUpdatedEventArgs e)
+        {
+            const string CUSTOM_ICON_UUID_FORM_FIELD = "m_pwCustomIconID";
+            const string ENTRY_ICON_BUTTON_NAME = "m_btnIcon";
+
+            PwEntryForm entryForm = ((PwEntryForm)((Control)sender).FindForm());
+
+            // Icon for the password entry has been updated by the run as tab so update the UI.
+            try
+            {
+                // The password entry manager will set the UUID on the entry but when the user saves it will overwrite it.
+                // We need to set the UUID value in the password form but it is a private class member.
+                // HACK: Do some cheeky reflection to set the value of the private property.
+                // WARNING: Likely to break!!!
+                FieldInfo customIconUuidField = typeof(PwEntryForm).GetField(
+                    CUSTOM_ICON_UUID_FORM_FIELD,
+                    BindingFlags.NonPublic | BindingFlags.Instance);
+                customIconUuidField.SetValue(entryForm, e.NewIcon.Uuid);
+
+                // Now that we've updated the value, we need to update the image on the button.
+                Button iconSelectonButton = UIUtils.GetControlByName<Button>(entryForm, ENTRY_ICON_BUTTON_NAME);
+                UIUtil.SetButtonImage(
+                    iconSelectonButton,
+                    ImageUtils.ScaleImage(e.NewIcon.GetImage(), 16, 16),
+                    true);
+
+                // Finally, update the password entry list.
+                host.MainWindow.RefreshEntriesList();
+                host.MainWindow.UpdateUI(false, null, false, null, true, null, true);
+
+                MessageBox.Show(entryForm, "Password Entry icon updated.", "Icon Updated");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    entryForm,
+                    $"The icon was updated for the password entry but there was an error while updating this form. Saving the entry will overwrite the new icon.\n\nAdditional Details:\n{ex.Message}",
+                    "Warning",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Warning);
+            }
         }
     }
 }

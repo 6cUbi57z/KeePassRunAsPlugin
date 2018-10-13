@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Drawing;
-using System.Reflection;
 using System.Windows.Forms;
 using KeePass.Forms;
-using KeePass.UI;
 using KeePassLib;
 using RunAsPlugin.Models;
 using RunAsPlugin.SafeManagement;
+using RunAsPlugin.UI.EventArgs;
 
 namespace RunAsPlugin.UI
 {
@@ -15,12 +13,12 @@ namespace RunAsPlugin.UI
     /// </summary>
     public partial class RunAsOptions : UserControl
     {
+        public event EventHandler<IconUpdatedEventArgs> EntryIconUpdated;
+
         /// <summary>
         /// The filter options available in the browse dialog.
         /// </summary>
         private const string BROWSE_APPLICATION_FILTER = "Application (*.exe)|*.exe|All files (*.*)|*.*";
-
-        private readonly PwEntryForm entryForm;
 
         /// <summary>
         /// The manager used for interacting with the open password entry.
@@ -41,7 +39,6 @@ namespace RunAsPlugin.UI
         {
             InitializeComponent();
 
-            this.entryForm = entryForm;
             this.passwordEntryManager = passwordEntryManager;
 
             this.LoadSettings();
@@ -101,41 +98,11 @@ namespace RunAsPlugin.UI
         /// <param name="e">The event arguments.</param>
         private void setIcon_Click(object sender, System.EventArgs e)
         {
-            const string CUSTOM_ICON_UUID_FORM_FIELD = "m_pwCustomIconID";
-
             string application = this.application.Text;
             PwCustomIcon customIcon = this.passwordEntryManager.SetIconFromExecutable(application);
 
-            // TODO: Move all of this to the WindowMonitor so that the options aren't messing with their parent controls.
-            try
-            {
-                // The password entry manager will set the UUID on the entry but when the user saves it will overwrite it.
-                // We need to set the UUID value in the password form but it is a private class member.
-                // HACK: Do some cheeky reflection to set the value of the private property.
-                // WARNING: Likely to break!!!
-                FieldInfo customIconUuidField = typeof(PwEntryForm).GetField(
-                    CUSTOM_ICON_UUID_FORM_FIELD,
-                    BindingFlags.NonPublic | BindingFlags.Instance);
-                customIconUuidField.SetValue(this.entryForm, customIcon.Uuid);
-
-                // Now that we've updated the value, we need to update the image on the button.
-                Button iconSelectonButton = this.GetIconButton();
-                UIUtil.SetButtonImage(
-                    iconSelectonButton,
-                    ScaleImage(customIcon.GetImage(), 16, 16),
-                    true);
-
-                MessageBox.Show(this.ParentForm, "Password Entry icon updated.", "Icon Updated");
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(
-                    this.ParentForm,
-                    "The icon was updated for the password entry but there was an error while updating this form. Saving the entry will overwrite the new icon.",
-                    "Warning",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Warning);
-            }
+            IconUpdatedEventArgs eventArgs = new IconUpdatedEventArgs(customIcon);
+            this.EntryIconUpdated?.Invoke(this, eventArgs);
         }
         #endregion
 
@@ -179,40 +146,6 @@ namespace RunAsPlugin.UI
             this.settings.IsNetOnly = isNetOnly;
 
             this.passwordEntryManager.SetRunAsSettings(this.settings);
-        }
-
-        private Button GetIconButton()
-        {
-            const string ENTRY_ICON_BUTTON_NAME = "m_btnIcon";
-
-            Control[] matchedControls = this.entryForm.Controls.Find(ENTRY_ICON_BUTTON_NAME, true);
-            if (matchedControls.Length == 0)
-            {
-                throw new System.Exception("Icon selector button not found.");
-            }
-
-            if (!(matchedControls[0] is Button))
-            {
-                throw new System.Exception("The control which was found is not a Button.");
-            }
-
-            return (Button)matchedControls[0];
-        }
-        private static Image ScaleImage(Image image, int maxWidth, int maxHeight)
-        {
-            var ratioX = (double)maxWidth / image.Width;
-            var ratioY = (double)maxHeight / image.Height;
-            var ratio = Math.Min(ratioX, ratioY);
-
-            var newWidth = (int)(image.Width * ratio);
-            var newHeight = (int)(image.Height * ratio);
-
-            var newImage = new Bitmap(newWidth, newHeight);
-
-            using (var graphics = Graphics.FromImage(newImage))
-                graphics.DrawImage(image, 0, 0, newWidth, newHeight);
-
-            return newImage;
         }
     }
 }
