@@ -46,6 +46,7 @@ namespace RunAsPlugin.UI
             RunAsOptions optionsControl = new RunAsOptions(container, this.passwordEntryManager);
             optionsControl.EntryIconUpdated += this.OptionsControl_EntryIconUpdated;
             optionsControl.Dock = DockStyle.Fill;
+            this.Controls.Add(optionsControl);
         }
 
         private void OptionsControl_EntryIconUpdated(object sender, IconUpdatedEventArgs e)
