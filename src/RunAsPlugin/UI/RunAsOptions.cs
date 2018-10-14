@@ -101,8 +101,11 @@ namespace RunAsPlugin.UI
             string application = this.application.Text;
             PwCustomIcon customIcon = this.passwordEntryManager.SetIconFromExecutable(application);
 
-            IconUpdatedEventArgs eventArgs = new IconUpdatedEventArgs(customIcon);
-            this.EntryIconUpdated?.Invoke(this, eventArgs);
+            if (this.EntryIconUpdated != null)
+            {
+                IconUpdatedEventArgs eventArgs = new IconUpdatedEventArgs(customIcon);
+                this.EntryIconUpdated(this, eventArgs);
+            }
         }
         #endregion
 

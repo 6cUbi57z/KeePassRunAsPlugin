@@ -51,7 +51,10 @@ namespace RunAsPlugin.UI
 
         private void OptionsControl_EntryIconUpdated(object sender, IconUpdatedEventArgs e)
         {
-            this.EntryIconUpdated?.Invoke(sender, e);
+            if (this.EntryIconUpdated != null)
+            {
+                this.EntryIconUpdated(sender, e);
+            }
         }
 
         /// <summary>
