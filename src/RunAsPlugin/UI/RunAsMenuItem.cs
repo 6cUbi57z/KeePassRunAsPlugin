@@ -2,7 +2,8 @@
 using System.Windows.Forms;
 using KeePass.Forms;
 using KeePassLib;
-using RunAsPlugin.Executor;
+using RunAsPlugin.Execution;
+using RunAsPlugin.SafeManagement;
 
 namespace RunAsPlugin.UI
 {
@@ -34,6 +35,40 @@ namespace RunAsPlugin.UI
         }
 
         /// <summary>
+        /// Adds the menu item to the context menu and attaches the relevant event handlers.
+        /// </summary>
+        /// <param name="entryContextMenu">The context menu to add the menu item to.</param>
+        internal void AddToContextMenu(ContextMenuStrip entryContextMenu)
+        {
+            entryContextMenu.Items.Add(this);
+            entryContextMenu.Opening += this.EntryContextMenu_Opening;
+        }
+
+        /// <summary>
+        /// Event handler triggered when the context menu containing this menu item is opened.
+        /// </summary>
+        /// <param name="sender">The object which triggered the event.</param>
+        /// <param name="e">The event arguments.</param>
+        private void EntryContextMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            PwEntry[] selectedEntries = this.mainWindow.GetSelectedEntries();
+
+            if (selectedEntries == null || selectedEntries.Length == 0)
+            {
+                this.Enabled = false;
+            }
+            else if (selectedEntries.Length == 1)
+            {
+                PasswordEntryManager entryManager = new PasswordEntryManager(selectedEntries[0]);
+                this.Enabled = entryManager.GetRunAsSettings().IsEnabled;
+            }
+            else
+            {
+                this.Enabled = true;
+            }
+        }
+
+        /// <summary>
         /// Event handler triggered when the menu item is clicked.
         /// </summary>
         /// <param name="sender">The object which triggered the event.</param>
@@ -47,21 +82,27 @@ namespace RunAsPlugin.UI
 
             foreach (PwEntry entry in selectedEntries)
             {
+                PasswordEntryManager entryManager = new PasswordEntryManager(entry);
+
                 try
                 {
                     // Create and run an executor for the password entry.
-                    ApplicationExecutor executor = new ApplicationExecutor(entry);
+                    ApplicationExecutor executor = new ApplicationExecutor(entryManager);
                     executor.Run();
                 }
-                catch (Exception ex)
+                catch (ApplicationExecutionException ex)
                 {
                     // If there was an error, display a suitable error message.
-                    // TODO: Make exception more specific
-                    // TODO: Log error
+                    string errorMessage = string.Concat(
+                        "Unable to execute application for password entry '", entryManager.GetTitle(), "':",
+                        Environment.NewLine,
+                        Environment.NewLine,
+                        ex.Message);
+
                     MessageBox.Show(
                         this.mainWindow,
-                        ex.Message,
-                        "Error",
+                        errorMessage,
+                        "Run As Error",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
                 }

@@ -11,6 +11,14 @@ namespace RunAsPlugin
     {
         private WindowMonitor windowMonitor;
 
+        public override string UpdateUrl
+        {
+            get
+            {
+                return "https://raw.githubusercontent.com/dale2507/KeePassRunAsPlugin/master/Version.txt";
+            }
+        }
+
         /// <summary>
         /// Initialises the plugin.
         /// </summary>
@@ -26,7 +34,7 @@ namespace RunAsPlugin
             contextMenu.Items.Add(new ToolStripSeparator());
 
             RunAsMenuItem runAsMenuItem = new RunAsMenuItem(host.MainWindow);
-            host.MainWindow.EntryContextMenu.Items.Add(runAsMenuItem);
+            runAsMenuItem.AddToContextMenu(host.MainWindow.EntryContextMenu);
 
             // Return true for a successful startup.
             return true;

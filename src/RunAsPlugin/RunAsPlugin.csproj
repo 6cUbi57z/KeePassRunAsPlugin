@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>RunAsPlugin</RootNamespace>
     <AssemblyName>RunAsPlugin</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -22,7 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>7</LangVersion>
+    <LangVersion>5</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,16 +49,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Executor\ApplicationExecutor.cs" />
-    <Compile Include="Executor\ImpersonationContext.cs" />
-    <Compile Include="Executor\LogonTypeProviders\ILogonTypeProvider.cs" />
-    <Compile Include="Executor\LogonTypeProviders\LogonTypeProvider.cs" />
-    <Compile Include="Models\ImpersonationSettings.cs" />
+    <Compile Include="Execution\ApplicationExecutionException.cs" />
+    <Compile Include="Execution\ApplicationExecutor.cs" />
+    <Compile Include="Execution\Impersonation\IImpersonationHandler.cs" />
+    <Compile Include="Execution\Impersonation\NativeCallImpersonationHandler.cs" />
+    <Compile Include="Models\ExecutionSettings.cs" />
+    <Compile Include="SafeManagement\ExecutableIcon.cs" />
     <Compile Include="SafeManagement\PasswordEntryManager.cs" />
     <Compile Include="SafeManagement\FieldNames.cs" />
     <Compile Include="Models\RunAsEntrySettings.cs" />
     <Compile Include="RunAsPluginExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UI\EventArgs\IconUpdatedEventArgs.cs" />
     <Compile Include="UI\RunAsMenuItem.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -72,6 +74,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="UI\WindowMonitor.cs" />
+    <Compile Include="Utils\ImageUtils.cs" />
+    <Compile Include="Utils\UIUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="UI\RunAsOptions.resx">
@@ -80,7 +84,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(TargetPath)" "$(SolutionDir)\..\lib\KeePass"</PostBuildEvent>
+    <PostBuildEvent>copy /Y "$(TargetPath)" "$(SolutionDir)\..\lib\KeePass"
+
+powershell "$(SolutionDir)\..\build\Set-VersionInUpdateFile.ps1" -DllPath "$(TargetPath)"
+powershell "$(SolutionDir)\..\build\Create-Plgx.ps1"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

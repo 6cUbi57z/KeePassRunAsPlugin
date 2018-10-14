@@ -5,7 +5,7 @@ namespace RunAsPlugin.Models
     /// <summary>
     /// Settings to be used when impersonating.
     /// </summary>
-    public class ImpersonationSettings
+    public class ExecutionSettings
     {
         /// <summary>
         /// The fully qualified domain name of the user.

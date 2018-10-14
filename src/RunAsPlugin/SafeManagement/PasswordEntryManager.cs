@@ -16,6 +16,8 @@ namespace RunAsPlugin.SafeManagement
         /// </summary>
         private readonly PwDatabase database;
 
+        private readonly PwEntry entry;
+
         /// <summary>
         /// The dictionary containing the string for the entry.
         /// </summary>
@@ -32,6 +34,7 @@ namespace RunAsPlugin.SafeManagement
         internal PasswordEntryManager(PwDatabase database, PwEntryForm entryForm)
         {
             this.database = database;
+            this.entry = entryForm.EntryRef;
             this.entryStrings = entryForm.EntryStrings;
         }
 
@@ -41,6 +44,7 @@ namespace RunAsPlugin.SafeManagement
         /// <param name="entry">The password entry to interact with.</param>
         internal PasswordEntryManager(PwEntry entry)
         {
+            this.entry = entry;
             this.entryStrings = entry.Strings;
         }
 
@@ -83,12 +87,12 @@ namespace RunAsPlugin.SafeManagement
         }
 
         /// <summary>
-        /// Gets the impersonation settings from the password entry.
+        /// Gets the execution settings from the password entry.
         /// </summary>
-        /// <returns>The impersonation settings for the entry.</returns>
-        internal ImpersonationSettings GetImpersonationSettings()
+        /// <returns>The execution settings for the entry.</returns>
+        internal ExecutionSettings GetExecutionSettings()
         {
-            return new ImpersonationSettings()
+            return new ExecutionSettings()
             {
                 FullUsername = this.entryStrings.ReadSafe(FieldNames.Username),
                 Password = this.entryStrings.Get(FieldNames.Password),
@@ -114,7 +118,13 @@ namespace RunAsPlugin.SafeManagement
         /// <returns>The value of the string field.</returns>
         private string GetString(string field)
         {
-            return this.entryStrings.Get(field)?.ReadString();
+            ProtectedString fieldValue = this.entryStrings.Get(field);
+            if (fieldValue != null)
+            {
+                return fieldValue.ReadString();
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -124,9 +134,38 @@ namespace RunAsPlugin.SafeManagement
         /// <returns>The value of the bool field.</returns>
         private bool GetBool(string field)
         {
-            string stringValue = this.entryStrings.Get(field)?.ReadString();
-            bool.TryParse(stringValue, out bool boolValue);
+            bool boolValue;
+
+            string stringValue = this.GetString(field);
+            bool.TryParse(stringValue, out boolValue);
             return boolValue;
+        }
+
+        internal PwCustomIcon SetIconFromExecutable(string executable)
+        {
+            ExecutableIcon exeIcon = new ExecutableIcon(executable);
+            PwCustomIcon icon = exeIcon.GetCustomIcon();
+
+            // Check for existing icons.
+            if (!this.IconExists(icon))
+            {
+                this.AddIconToDatabase(icon);
+            }
+
+            this.entry.CustomIconUuid = icon.Uuid;
+            this.entry.Touch(true, false);
+
+            return icon;
+        }
+
+        private bool IconExists(PwCustomIcon icon)
+        {
+            return this.database.CustomIcons.Exists(i => i.Uuid.Equals(icon.Uuid));
+        }
+
+        private void AddIconToDatabase(PwCustomIcon icon)
+        {
+            this.database.CustomIcons.Add(icon);
         }
     }
 }
