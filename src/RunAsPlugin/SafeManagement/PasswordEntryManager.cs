@@ -118,7 +118,13 @@ namespace RunAsPlugin.SafeManagement
         /// <returns>The value of the string field.</returns>
         private string GetString(string field)
         {
-            return this.entryStrings.Get(field)?.ReadString();
+            ProtectedString fieldValue = this.entryStrings.Get(field);
+            if (fieldValue != null)
+            {
+                return fieldValue.ReadString();
+            }
+
+            return null;
         }
 
         /// <summary>
@@ -128,8 +134,10 @@ namespace RunAsPlugin.SafeManagement
         /// <returns>The value of the bool field.</returns>
         private bool GetBool(string field)
         {
-            string stringValue = this.entryStrings.Get(field)?.ReadString();
-            bool.TryParse(stringValue, out bool boolValue);
+            bool boolValue;
+
+            string stringValue = this.GetString(field);
+            bool.TryParse(stringValue, out boolValue);
             return boolValue;
         }
 

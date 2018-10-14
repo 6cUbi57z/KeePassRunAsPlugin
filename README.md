@@ -3,10 +3,10 @@
 - [Introduction](#introduction)
 - [Requirements](#requirements)
 - [Contributing](#contributing)
-  - [Development Requirements](#development-requirements)
-  - [Environment Setup](#environment-setup)
-  - [Debugging](#debugging)
-  - [Submitting Changes](#submitting-changes)
+    - [Development Requirements](#development-requirements)
+    - [Environment Setup](#environment-setup)
+    - [Debugging](#debugging)
+    - [Submitting Changes](#submitting-changes)
 - [Special Thanks](#special-thanks)
 
 ## Introduction ##
@@ -44,7 +44,7 @@ The only environment setup should be to ensure that KeePass 2.40 Portable is in 
 2. Open the Package Manager Console (Tools -> NuGet Package Manager -> Package Manager Console).
 3. Enter the following command and hit `Enter`:
     ```powershell
-    ..\Get-KeePassLib.ps1
+    ..\build\Get-KeePassLib.ps1
     ```
 
 Alternatively, you can download the portable version manually and extract it so that `KeePass.exe` is at `<RepositoryRoot>\lib\KeePass\KeePass.exe`.

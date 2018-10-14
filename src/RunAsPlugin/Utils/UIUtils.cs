@@ -9,17 +9,17 @@ namespace RunAsPlugin.Utils
             Control[] matchedControls = parentForm.Controls.Find(controlName, true);
             if (matchedControls.Length == 0)
             {
-                throw new System.Exception($"The control '{controlName}' could not be found.");
+                throw new System.Exception(string.Concat("The control '", controlName, "' could not be found."));
             }
 
             if (matchedControls.Length > 1)
             {
-                throw new System.Exception($"Multiple controls named '{controlName}' were found.");
+                throw new System.Exception(string.Concat("Multiple controls named '", controlName, "' were found."));
             }
 
             if (!(matchedControls[0] is TControl))
             {
-                throw new System.Exception($"The control named '{controlName}' which was found is not of type '{typeof(TControl).Name}'.");
+                throw new System.Exception(string.Concat("The control named '", controlName, "' which was found is not of type '", typeof(TControl).Name, "'."));
             }
 
             return (TControl)matchedControls[0];

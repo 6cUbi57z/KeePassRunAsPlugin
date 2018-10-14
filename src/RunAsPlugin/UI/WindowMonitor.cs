@@ -95,7 +95,7 @@ namespace RunAsPlugin.UI
             {
                 MessageBox.Show(
                     entryForm,
-                    $"The icon was updated for the password entry but there was an error while updating this form. Saving the entry will overwrite the new icon.\n\nAdditional Details:\n{ex.Message}",
+                    string.Concat("The icon was updated for the password entry but there was an error while updating this form. Saving the entry will overwrite the new icon.\n\nAdditional Details:\n", ex.Message),
                     "Warning",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Warning);
