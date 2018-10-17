@@ -1,17 +1,21 @@
+#requires -Version 5
 
-Set-Variable -Name "REPOSITORY_ROOT" -Value (Join-Path $PSScriptRoot "..\") -Option ReadOnly -Force
-Set-Variable -Name "KEEPASS_EXECUTABLE" -Value (Join-Path $REPOSITORY_ROOT "lib\KeePass\KeePass.exe") -Option ReadOnly -Force
-Set-Variable -Name "PROJECT_DIR" -Value (Join-Path $REPOSITORY_ROOT "src\RunAsPlugin") -Option ReadOnly -Force
-Set-Variable -Name "TEMP_BUILD_DIR_NAME" -Value "publish" -Option ReadOnly -Force
-Set-Variable -Name "TEMP_BUILD_DIR_FULL_PATH" -Value (Join-Path $REPOSITORY_ROOT "publish") -Option ReadOnly -Force
-Set-Variable -Name "EXCLUDE_FILE" -Value (Join-Path $PSScriptRoot "plgx-exclude.txt") -Option ReadOnly -Force
-Set-Variable -Name "PLGX_FILE" -Value (Join-Path $REPOSITORY_ROOT "RunAsPlugin.plgx") -Option ReadOnly -Force
-
-Set-Variable -Name "REQUIREMENT_KEEPASS_VERSION" -Value "2.40" -Option ReadOnly -Force
-Set-Variable -Name "REQUIREMENT_DOTNET_VERSION" -Value "4.6" -Option ReadOnly -Force
-Set-Variable -Name "REQUIREMENT_OS" -Value "Windows" -Option ReadOnly -Force
+$ErrorActionPreference = "Stop"
 
 try {
+
+    Set-Variable -Name "REPOSITORY_ROOT" -Value (Join-Path $PSScriptRoot "..\") -Option ReadOnly -Force
+    Set-Variable -Name "KEEPASS_EXECUTABLE" -Value (Join-Path $REPOSITORY_ROOT "lib\KeePass\KeePass.exe") -Option ReadOnly -Force
+    Set-Variable -Name "PROJECT_DIR" -Value (Join-Path $REPOSITORY_ROOT "src\RunAsPlugin") -Option ReadOnly -Force
+    Set-Variable -Name "TEMP_BUILD_DIR_NAME" -Value "publish" -Option ReadOnly -Force
+    Set-Variable -Name "TEMP_BUILD_DIR_FULL_PATH" -Value (Join-Path $REPOSITORY_ROOT "publish") -Option ReadOnly -Force
+    Set-Variable -Name "EXCLUDE_FILE" -Value (Join-Path $PSScriptRoot "plgx-exclude.txt") -Option ReadOnly -Force
+    Set-Variable -Name "PLGX_FILE" -Value (Join-Path $REPOSITORY_ROOT "RunAsPlugin.plgx") -Option ReadOnly -Force
+
+    Set-Variable -Name "REQUIREMENT_KEEPASS_VERSION" -Value "2.40" -Option ReadOnly -Force
+    Set-Variable -Name "REQUIREMENT_DOTNET_VERSION" -Value "4.6" -Option ReadOnly -Force
+    Set-Variable -Name "REQUIREMENT_OS" -Value "Windows" -Option ReadOnly -Force
+
     # Remove the temporary build directory to use for storing the files for the plgx build if it already exists.
     if (Test-Path $TEMP_BUILD_DIR_FULL_PATH) {
         Write-Host "Temporary build directory '$TEMP_BUILD_DIR_FULL_PATH' already exists. Deleting..."
@@ -19,7 +23,7 @@ try {
     }
 
     # Create a temporary directory to use for storing the files for the plgx build.
-    
+
     Write-Host "Creating temporary build directory '$TEMP_BUILD_DIR_FULL_PATH'..."
     New-Item -Path $TEMP_BUILD_DIR_FULL_PATH -ItemType Directory | Out-Null
 
@@ -48,11 +52,15 @@ try {
     if (Test-Path $PLGX_FILE) {
         Remove-Item -Path "$PLGX_FILE"
     }
+    $pwd = Get-Location
+    Set-Location $REPOSITORY_ROOT
     Move-Item -Path "$TEMP_BUILD_DIR_NAME.plgx" -Destination "$PLGX_FILE"
+    Set-Location $pwd
 
     # Delete the temporary directory.
     Write-Host "Removing temporary build directory '$TEMP_BUILD_DIR_FULL_PATH'..."
     Remove-Item -Path $TEMP_BUILD_DIR_FULL_PATH -Recurse
+
 } catch {
     throw
 }
