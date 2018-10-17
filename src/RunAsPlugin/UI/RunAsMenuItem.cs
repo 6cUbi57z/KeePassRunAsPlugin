@@ -59,7 +59,7 @@ namespace RunAsPlugin.UI
             }
             else if (selectedEntries.Length == 1)
             {
-                PasswordEntryManager entryManager = new PasswordEntryManager(selectedEntries[0]);
+                PasswordEntryManager entryManager = new PasswordEntryManager(this.mainWindow.ActiveDatabase, selectedEntries[0]);
                 this.Enabled = entryManager.GetRunAsSettings().IsEnabled;
             }
             else
@@ -82,7 +82,7 @@ namespace RunAsPlugin.UI
 
             foreach (PwEntry entry in selectedEntries)
             {
-                PasswordEntryManager entryManager = new PasswordEntryManager(entry);
+                PasswordEntryManager entryManager = new PasswordEntryManager(this.mainWindow.ActiveDatabase, entry);
 
                 try
                 {
