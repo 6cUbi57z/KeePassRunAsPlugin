@@ -1,5 +1,7 @@
 #requires -Version 5
 
+$ErrorActionPreference = "Stop"
+
 try {
 
     Set-Variable -Name DOWNLOAD_REFERRER -Value "https://sourceforge.net/projects/keepass/files/KeePass%202.x/2.40/KeePass-2.40.zip/download?use_mirror=netcologne&r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Fkeepass%2Ffiles%2FKeePass%25202.x%2F2.40%2FKeePass-2.40.zip%2Fdownload"
