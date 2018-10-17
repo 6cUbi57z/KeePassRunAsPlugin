@@ -1,21 +1,24 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using RunAsPlugin.Models;
+using RunAsPlugin.SafeManagement;
 
 namespace RunAsPlugin.Execution.Impersonation
 {
     internal class NativeCallImpersonationHandler : IImpersonationHandler
     {
-        public void ExecuteApplication(string application, ExecutionSettings settings)
+        public void ExecuteApplication(string application, PasswordEntryManager entryManager)
         {
+            ExecutionSettings settings = entryManager.GetExecutionSettings();
+
             // Determine the values to use on native calls based on the impersonation settings.
             string domain = settings.Domain;
             string username = settings.Username;
             Win32.LogonFlags logonFlags = settings.NetOnly ? Win32.LogonFlags.LOGON_NETCREDENTIALS_ONLY : Win32.LogonFlags.LOGON_WITH_PROFILE;
 
             // Create variables required for impersonation handling.
-            //IntPtr token = IntPtr.Zero;
+            IntPtr token = IntPtr.Zero;
             Win32.StartupInfo startupInfo = new Win32.StartupInfo();
             Win32.ProcessInformation processInfo = new Win32.ProcessInformation();
 
@@ -27,7 +30,7 @@ namespace RunAsPlugin.Execution.Impersonation
                 bool result = Win32.CreateProcessWithLogonW(
                     username,
                     domain,
-                    settings.Password.ReadString(),
+                    entryManager.ProcessReplacementTags(settings.Password),
                     (uint)logonFlags,
                     application,
                     null,
@@ -90,15 +93,15 @@ namespace RunAsPlugin.Execution.Impersonation
 
             public enum LogonTypes
             {
-                LOGON32_LOGON_INTERACTIVE = 2,
-                LOGON32_LOGON_NETWORK = 3,
-                LOGON32_LOGON_BATCH = 4,
-                LOGON32_LOGON_SERVICE = 5,
-                LOGON32_LOGON_UNLOCK = 7,
-                LOGON32_LOGON_NEW_CREDENTIALS = 9,
+                INTERACTIVE = 2,
+                NETWORK = 3,
+                BATCH = 4,
+                SERVICE = 5,
+                UNLOCK = 7,
+                NEW_CREDENTIALS = 9,
 
                 [Obsolete]
-                LOGON32_LOGON_NETWORK_CLEARTEXT = 8
+                NETWORK_CLEARTEXT = 8
             }
 
             public enum LogonProviders
@@ -111,7 +114,7 @@ namespace RunAsPlugin.Execution.Impersonation
             #endregion
 
             #region Win32 Methods
-            [DllImport("advapi32.dll", SetLastError = true)]
+            [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             public static extern int LogonUser(
                 string lpszUserName,
                 string lpszDomain,

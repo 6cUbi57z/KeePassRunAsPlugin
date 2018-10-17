@@ -1,4 +1,5 @@
 ﻿using KeePass.Forms;
+using KeePass.Util.Spr;
 using KeePassLib;
 using KeePassLib.Collections;
 using KeePassLib.Security;
@@ -42,8 +43,9 @@ namespace RunAsPlugin.SafeManagement
         /// Constructor for general interaction with a password entry.
         /// </summary>
         /// <param name="entry">The password entry to interact with.</param>
-        internal PasswordEntryManager(PwEntry entry)
+        internal PasswordEntryManager(PwDatabase database, PwEntry entry)
         {
+            this.database = database;
             this.entry = entry;
             this.entryStrings = entry.Strings;
         }
@@ -55,7 +57,7 @@ namespace RunAsPlugin.SafeManagement
         internal RunAsEntrySettings GetRunAsSettings()
         {
             bool isEnabled = this.GetBool(FieldNames.RunAs.IsEnabled);
-            string application = this.GetString(FieldNames.RunAs.Application);
+            string application = this.GetString(FieldNames.RunAs.Application, false);
             bool isNetOnly = this.GetBool(FieldNames.RunAs.NetOnly);
 
             return new RunAsEntrySettings()
@@ -94,7 +96,7 @@ namespace RunAsPlugin.SafeManagement
         {
             return new ExecutionSettings()
             {
-                FullUsername = this.entryStrings.ReadSafe(FieldNames.Username),
+                FullUsername = this.GetString(FieldNames.Username, true),
                 Password = this.entryStrings.Get(FieldNames.Password),
                 NetOnly = this.GetBool(FieldNames.RunAs.NetOnly)
             };
@@ -111,20 +113,33 @@ namespace RunAsPlugin.SafeManagement
             this.entryStrings.Set(field, protectedString);
         }
 
+        public string ProcessReplacementTags(ProtectedString protectedString)
+        {
+            SprContext context = new SprContext(this.entry, this.database, SprCompileFlags.All);
+            return SprEngine.Compile(protectedString.ReadString(), context);
+        }
+
         /// <summary>
         /// Obtains a string from the password entry. Returns null if the string doesn't exist.
         /// </summary>
         /// <param name="field">The name of the string field.</param>
         /// <returns>The value of the string field.</returns>
-        private string GetString(string field)
+        private string GetString(string field, bool processReplacementTags)
         {
-            ProtectedString fieldValue = this.entryStrings.Get(field);
-            if (fieldValue != null)
+            ProtectedString protectedFieldValue = this.entryStrings.Get(field);
+            if (protectedFieldValue == null)
             {
-                return fieldValue.ReadString();
+                return null;
             }
 
-            return null;
+            if (processReplacementTags)
+            {
+                return this.ProcessReplacementTags(protectedFieldValue);
+            }
+            else
+            {
+                return protectedFieldValue.ReadString();
+            }
         }
 
         /// <summary>
@@ -136,7 +151,7 @@ namespace RunAsPlugin.SafeManagement
         {
             bool boolValue;
 
-            string stringValue = this.GetString(field);
+            string stringValue = this.GetString(field, true);
             bool.TryParse(stringValue, out boolValue);
             return boolValue;
         }

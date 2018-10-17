@@ -45,7 +45,7 @@ namespace RunAsPlugin.Execution
             try
             {
                 IImpersonationHandler impersonation = new NativeCallImpersonationHandler();
-                impersonation.ExecuteApplication(this.settings.Application, impersonationSettings);
+                impersonation.ExecuteApplication(this.settings.Application, this.entryManager);
             }
             catch (Exception ex)
             {
