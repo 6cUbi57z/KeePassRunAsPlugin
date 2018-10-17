@@ -1,4 +1,5 @@
 ﻿using System.Windows.Forms;
+using RunAsPlugin.Contracts;
 
 namespace RunAsPlugin.Utils
 {
@@ -6,6 +7,9 @@ namespace RunAsPlugin.Utils
     {
         public static TControl GetControlByName<TControl>(Form parentForm, string controlName) where TControl : Control
         {
+            ArgumentContract.NotNull("parentForm", parentForm);
+            ArgumentContract.StringNotNullOrWhiteSpace("controlName", controlName);
+
             Control[] matchedControls = parentForm.Controls.Find(controlName, true);
             if (matchedControls.Length == 0)
             {
