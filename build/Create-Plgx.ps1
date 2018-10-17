@@ -52,7 +52,10 @@ try {
     if (Test-Path $PLGX_FILE) {
         Remove-Item -Path "$PLGX_FILE"
     }
+    $pwd = Get-Location
+    Set-Location $REPOSITORY_ROOT
     Move-Item -Path "$TEMP_BUILD_DIR_NAME.plgx" -Destination "$PLGX_FILE"
+    Set-Location $pwd
 
     # Delete the temporary directory.
     Write-Host "Removing temporary build directory '$TEMP_BUILD_DIR_FULL_PATH'..."
