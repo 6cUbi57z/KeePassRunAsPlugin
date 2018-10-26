@@ -23,8 +23,6 @@ This plugin has the following requirements:
 
 There are currently no plans to support operating systems other than Windows but if this is required, feel free to [raise an issue](https://github.com/dale2507/KeePassRunAsPlugin/issues/new).
 
-The limitation of requiring KeePass 2.40 will be resolved with [Issue 1](https://github.com/dale2507/KeePassRunAsPlugin/issues/1).
-
 ## Contributing ##
 
 ### Development Requirements ###
