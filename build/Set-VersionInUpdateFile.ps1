@@ -1,11 +1,11 @@
 #requires -Version 5
 
-$ErrorActionPreference = "Stop"
-
 Param(
     [Parameter(Mandatory=$true)]
     [string]$DllPath
 )
+
+$ErrorActionPreference = "Stop"
 
 try {
 
