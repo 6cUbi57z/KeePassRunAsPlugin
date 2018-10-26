@@ -1,4 +1,4 @@
-#requires -Version 5
+#requires -Version 5 -Modules Microsoft.PowerShell.Archive
 
 $ErrorActionPreference = "Stop"
 
@@ -29,7 +29,7 @@ try {
 
     # Extract the zip file
     Write-Output "Extracting download..."
-    Expand-Archive -Path $zipPath -OutputPath $KEEPASS_LIB_PATH
+    Expand-Archive -Path $zipPath -DestinationPath $KEEPASS_LIB_PATH
 
     # Delete the download file to clean up
     Write-Output "Cleaning up..."
