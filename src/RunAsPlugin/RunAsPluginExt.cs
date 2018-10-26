@@ -1,5 +1,6 @@
 ﻿using System.Windows.Forms;
 using KeePass.Plugins;
+using KeePass.UI;
 using RunAsPlugin.UI;
 
 namespace RunAsPlugin
@@ -35,6 +36,7 @@ namespace RunAsPlugin
 
             RunAsMenuItem runAsMenuItem = new RunAsMenuItem(host.MainWindow);
             runAsMenuItem.AddToContextMenu(host.MainWindow.EntryContextMenu);
+            UIUtil.AssignShortcut(runAsMenuItem, Keys.Control | Keys.G);
 
             // Return true for a successful startup.
             return true;
