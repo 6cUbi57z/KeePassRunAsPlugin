@@ -78,6 +78,13 @@ namespace RunAsPlugin.UI
             // Obtain a list of all selected entries to execute and loop through them.
             PwEntry[] selectedEntries = this.mainWindow.GetSelectedEntries();
 
+            // If there are no entries (the array is null), just return as we
+            // probably entered this through the keyboard shotcut event.
+            if (selectedEntries == null)
+            {
+                return;
+            }
+
             // TODO: Add confirmation when executing more than one application.
 
             foreach (PwEntry entry in selectedEntries)
