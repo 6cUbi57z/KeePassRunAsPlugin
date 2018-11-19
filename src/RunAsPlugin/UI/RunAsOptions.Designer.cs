@@ -35,6 +35,8 @@
             this.application = new System.Windows.Forms.TextBox();
             this.applicationLabel = new System.Windows.Forms.Label();
             this.enableRunAs = new System.Windows.Forms.CheckBox();
+            this.arguments = new System.Windows.Forms.TextBox();
+            this.argumentsLabel = new System.Windows.Forms.Label();
             this.runAsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -42,6 +44,8 @@
             // 
             this.runAsGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.runAsGroupBox.Controls.Add(this.argumentsLabel);
+            this.runAsGroupBox.Controls.Add(this.arguments);
             this.runAsGroupBox.Controls.Add(this.setIcon);
             this.runAsGroupBox.Controls.Add(this.netOnly);
             this.runAsGroupBox.Controls.Add(this.applicationBrowse);
@@ -50,7 +54,7 @@
             this.runAsGroupBox.Controls.Add(this.enableRunAs);
             this.runAsGroupBox.Location = new System.Drawing.Point(3, 3);
             this.runAsGroupBox.Name = "runAsGroupBox";
-            this.runAsGroupBox.Size = new System.Drawing.Size(418, 107);
+            this.runAsGroupBox.Size = new System.Drawing.Size(418, 128);
             this.runAsGroupBox.TabIndex = 0;
             this.runAsGroupBox.TabStop = false;
             // 
@@ -59,9 +63,9 @@
             this.setIcon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.setIcon.Enabled = false;
-            this.setIcon.Location = new System.Drawing.Point(9, 77);
+            this.setIcon.Location = new System.Drawing.Point(6, 99);
             this.setIcon.Name = "setIcon";
-            this.setIcon.Size = new System.Drawing.Size(403, 23);
+            this.setIcon.Size = new System.Drawing.Size(406, 23);
             this.setIcon.TabIndex = 5;
             this.setIcon.Text = "Set Entry Icon from Application";
             this.setIcon.UseVisualStyleBackColor = true;
@@ -71,7 +75,7 @@
             // 
             this.netOnly.AutoSize = true;
             this.netOnly.Enabled = false;
-            this.netOnly.Location = new System.Drawing.Point(71, 50);
+            this.netOnly.Location = new System.Drawing.Point(71, 76);
             this.netOnly.Name = "netOnly";
             this.netOnly.Size = new System.Drawing.Size(182, 17);
             this.netOnly.TabIndex = 4;
@@ -120,6 +124,24 @@
             this.enableRunAs.UseVisualStyleBackColor = true;
             this.enableRunAs.CheckedChanged += new System.EventHandler(this.enableRunAs_CheckedChanged);
             // 
+            // arguments
+            // 
+            this.arguments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.arguments.Location = new System.Drawing.Point(71, 50);
+            this.arguments.Name = "arguments";
+            this.arguments.Size = new System.Drawing.Size(260, 20);
+            this.arguments.TabIndex = 6;
+            // 
+            // argumentsLabel
+            // 
+            this.argumentsLabel.AutoSize = true;
+            this.argumentsLabel.Location = new System.Drawing.Point(6, 53);
+            this.argumentsLabel.Name = "argumentsLabel";
+            this.argumentsLabel.Size = new System.Drawing.Size(57, 13);
+            this.argumentsLabel.TabIndex = 7;
+            this.argumentsLabel.Text = "Arguments";
+            // 
             // RunAsOptions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -127,7 +149,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.runAsGroupBox);
             this.Name = "RunAsOptions";
-            this.Size = new System.Drawing.Size(424, 116);
+            this.Size = new System.Drawing.Size(424, 134);
             this.runAsGroupBox.ResumeLayout(false);
             this.runAsGroupBox.PerformLayout();
             this.ResumeLayout(false);
@@ -143,5 +165,7 @@
         private System.Windows.Forms.Label applicationLabel;
         private System.Windows.Forms.CheckBox enableRunAs;
         private System.Windows.Forms.Button setIcon;
+        private System.Windows.Forms.Label argumentsLabel;
+        private System.Windows.Forms.TextBox arguments;
     }
 }

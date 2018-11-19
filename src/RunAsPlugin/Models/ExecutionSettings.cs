@@ -75,5 +75,15 @@ namespace RunAsPlugin.Models
         /// This executes the application using the current user's credentials but will use the impersonated credentials for network requests.
         /// </remarks>
         public bool NetOnly { get; set; }
+
+        /// <summary>
+        /// The application to execute.
+        /// </summary>
+        public string Application { get; set; }
+
+        /// <summary>
+        /// The arguments to pass to the application.
+        /// </summary>
+        public string Arguments { get; set; }
     }
 }

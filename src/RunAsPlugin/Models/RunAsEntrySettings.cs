@@ -16,6 +16,11 @@
         internal string Application { get; set; }
 
         /// <summary>
+        /// The arguments to pass to the application.
+        /// </summary>
+        internal string Arguments { get; set; }
+
+        /// <summary>
         /// Determines if the impersonation should use the "Net Only" option.
         /// </summary>
         /// <remarks>

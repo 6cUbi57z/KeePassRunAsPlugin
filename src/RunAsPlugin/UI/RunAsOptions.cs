@@ -117,6 +117,7 @@ namespace RunAsPlugin.UI
         {
             this.application.Enabled = isEnabled;
             this.applicationBrowse.Enabled = isEnabled;
+            this.arguments.Enabled = isEnabled;
             this.netOnly.Enabled = isEnabled;
             this.setIcon.Enabled = isEnabled;
         }
@@ -130,6 +131,7 @@ namespace RunAsPlugin.UI
 
             this.enableRunAs.Checked = this.settings.IsEnabled;
             this.application.Text = this.settings.Application;
+            this.arguments.Text = this.settings.Arguments;
             this.netOnly.Checked = this.settings.IsNetOnly;
 
             this.SetRunAsEnabledState(this.settings.IsEnabled);
@@ -142,10 +144,12 @@ namespace RunAsPlugin.UI
         {
             bool isEnabled = this.enableRunAs.Checked;
             string application = this.application.Text;
+            string arguments = this.arguments.Text;
             bool isNetOnly = this.netOnly.Checked;
 
             this.settings.IsEnabled = isEnabled;
             this.settings.Application = application;
+            this.settings.Arguments = arguments;
             this.settings.IsNetOnly = isNetOnly;
 
             this.passwordEntryManager.SetRunAsSettings(this.settings);
