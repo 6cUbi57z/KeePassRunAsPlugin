@@ -27,7 +27,7 @@
         private readonly PasswordEntryManager passwordEntryManager;
 
         /// <summary>
-        /// Default constructor.
+        /// Initializes a new instance of the <see cref="RunAsTab" /> class.
         /// </summary>
         /// <param name="container">The password entry form.</param>
         /// <param name="passwordEntryManager">The manager used for interacting with the open password entry.</param>

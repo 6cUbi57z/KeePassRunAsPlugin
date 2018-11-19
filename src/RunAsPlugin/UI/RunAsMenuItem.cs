@@ -23,7 +23,7 @@
         private readonly MainForm mainWindow;
 
         /// <summary>
-        /// Default constructor.
+        /// Initializes a new instance of the <see cref="RunAsMenuItem" /> class.
         /// </summary>
         /// <param name="mainWindow">The main KeePass window.</param>
         internal RunAsMenuItem(MainForm mainWindow)

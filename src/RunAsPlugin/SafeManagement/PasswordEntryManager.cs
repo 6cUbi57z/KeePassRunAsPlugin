@@ -25,7 +25,8 @@
         private readonly ProtectedStringDictionary entryStrings;
 
         /// <summary>
-        /// Constructor for use with the password entry form.
+        /// Initializes a new instance of the <see cref="PasswordEntryManager" /> class.
+        /// For use with the password entry form.
         /// </summary>
         /// <remarks>
         /// This uses the strings dictionary provided by the password entry form to ensure it is only updated when the form is saved.
@@ -40,7 +41,8 @@
         }
 
         /// <summary>
-        /// Constructor for general interaction with a password entry.
+        /// Initializes a new instance of the <see cref="PasswordEntryManager" /> class.
+        /// For general interaction with a password entry.
         /// </summary>
         /// <param name="entry">The password entry to interact with.</param>
         internal PasswordEntryManager(PwDatabase database, PwEntry entry)
