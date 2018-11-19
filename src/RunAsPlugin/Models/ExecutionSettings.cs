@@ -8,7 +8,7 @@
     public class ExecutionSettings
     {
         /// <summary>
-        /// The fully qualified domain name of the user.
+        /// Gets or sets the fully qualified domain name of the user.
         /// </summary>
         /// <example>
         /// * MyDomain\MyUsername
@@ -17,7 +17,7 @@
         public string FullUsername { get; set; }
 
         /// <summary>
-        /// The username part of the credentials.
+        /// Gets the username part of the credentials.
         /// </summary>
         public string Username
         {
@@ -39,7 +39,7 @@
         }
 
         /// <summary>
-        /// The domain part of the credentials.
+        /// Gets the domain part of the credentials.
         /// </summary>
         public string Domain
         {
@@ -61,7 +61,7 @@
         }
 
         /// <summary>
-        /// The password for the credentials.
+        /// Gets or sets the password for the credentials.
         /// </summary>
         /// <remarks>
         /// This is kept as a <see cref="ProtectedString"/> so that the contents remain protected in memory.
@@ -69,7 +69,7 @@
         public ProtectedString Password { get; set; }
 
         /// <summary>
-        /// Determines if the impersonation should use the "Net Only" option.
+        /// Gets or sets a value indicating whether the impersonation should use the "Net Only" option.
         /// </summary>
         /// <remarks>
         /// This executes the application using the current user's credentials but will use the impersonated credentials for network requests.
@@ -77,17 +77,17 @@
         public bool NetOnly { get; set; }
 
         /// <summary>
-        /// The application to execute.
+        /// Gets or sets the application to execute.
         /// </summary>
         public string Application { get; set; }
 
         /// <summary>
-        /// The arguments to pass to the application.
+        /// Gets or sets the arguments to pass to the application.
         /// </summary>
         public string Arguments { get; set; }
 
         /// <summary>
-        /// The working directory to start the application from.
+        /// Gets or sets the working directory to start the application from.
         /// </summary>
         public string WorkingDir { get; set; }
     }

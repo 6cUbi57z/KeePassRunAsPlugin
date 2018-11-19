@@ -6,27 +6,27 @@
     internal class RunAsEntrySettings
     {
         /// <summary>
-        /// Determines if the "Run As" functionality is enabled.
+        /// Gets or sets a value indicating whether the "Run As" functionality is enabled.
         /// </summary>
         internal bool IsEnabled { get; set; }
 
         /// <summary>
-        /// Determines the application to execute.
+        /// Gets or sets the application to execute.
         /// </summary>
         internal string Application { get; set; }
 
         /// <summary>
-        /// The arguments to pass to the application.
+        /// Gets or sets the arguments to pass to the application.
         /// </summary>
         internal string Arguments { get; set; }
 
         /// <summary>
-        /// The working dir to launch the application from.
+        /// Gets or sets the working dir to launch the application from.
         /// </summary>
         internal string WorkingDir { get; set; }
 
         /// <summary>
-        /// Determines if the impersonation should use the "Net Only" option.
+        /// Gets or sets a value indicating whether the impersonation should use the "Net Only" option.
         /// </summary>
         /// <remarks>
         /// This executes the application using the current user's credentials but will use the impersonated credentials for network requests.
