@@ -95,7 +95,7 @@ namespace RunAsPlugin.UI
             this.setIcon.TabIndex = 5;
             this.setIcon.Text = "Set Entry Icon from Application";
             this.setIcon.UseVisualStyleBackColor = true;
-            this.setIcon.Click += new System.EventHandler(this.setIcon_Click);
+            this.setIcon.Click += new System.EventHandler(this.SetIcon_Click);
             // 
             // netOnly
             // 
@@ -118,7 +118,7 @@ namespace RunAsPlugin.UI
             this.applicationBrowse.TabIndex = 3;
             this.applicationBrowse.Text = "Browse...";
             this.applicationBrowse.UseVisualStyleBackColor = true;
-            this.applicationBrowse.Click += new System.EventHandler(this.applicationBrowse_Click);
+            this.applicationBrowse.Click += new System.EventHandler(this.ApplicationBrowse_Click);
             // 
             // application
             // 
@@ -148,7 +148,7 @@ namespace RunAsPlugin.UI
             this.enableRunAs.TabIndex = 0;
             this.enableRunAs.Text = "Enable Run As";
             this.enableRunAs.UseVisualStyleBackColor = true;
-            this.enableRunAs.CheckedChanged += new System.EventHandler(this.enableRunAs_CheckedChanged);
+            this.enableRunAs.CheckedChanged += new System.EventHandler(this.EnableRunAs_CheckedChanged);
             // 
             // workingDir
             // 
@@ -177,7 +177,7 @@ namespace RunAsPlugin.UI
             this.workingDirBrowse.TabIndex = 10;
             this.workingDirBrowse.Text = "Browse...";
             this.workingDirBrowse.UseVisualStyleBackColor = true;
-            this.workingDirBrowse.Click += new System.EventHandler(this.workingDirBrowse_Click);
+            this.workingDirBrowse.Click += new System.EventHandler(this.WorkingDirBrowse_Click);
             // 
             // RunAsOptions
             // 

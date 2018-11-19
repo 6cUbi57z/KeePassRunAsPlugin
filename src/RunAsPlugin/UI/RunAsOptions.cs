@@ -61,7 +61,7 @@
         /// </summary>
         /// <param name="sender">The object which triggered the event.</param>
         /// <param name="e">The event arguments.</param>
-        private void applicationBrowse_Click(object sender, System.EventArgs e)
+        private void ApplicationBrowse_Click(object sender, System.EventArgs e)
         {
             string currentApplication = this.application.Text;
 
@@ -84,7 +84,7 @@
         /// </summary>
         /// <param name="sender">The object which triggered the event.</param>
         /// <param name="e">The event arguments.</param>
-        private void workingDirBrowse_Click(object sender, System.EventArgs e)
+        private void WorkingDirBrowse_Click(object sender, System.EventArgs e)
         {
             string currentWorkingDir = this.workingDir.Text;
 
@@ -105,7 +105,7 @@
         /// </summary>
         /// <param name="sender">The object which triggered the event.</param>
         /// <param name="e">The event arguments.</param>
-        private void enableRunAs_CheckedChanged(object sender, System.EventArgs e)
+        private void EnableRunAs_CheckedChanged(object sender, System.EventArgs e)
         {
             bool isChecked = ((CheckBox)sender).Checked;
             this.SetRunAsEnabledState(isChecked);
@@ -116,7 +116,7 @@
         /// </summary>
         /// <param name="sender">The object which triggered the event.</param>
         /// <param name="e">The event arguments.</param>
-        private void setIcon_Click(object sender, System.EventArgs e)
+        private void SetIcon_Click(object sender, System.EventArgs e)
         {
             string application = this.application.Text;
             PwCustomIcon customIcon = this.passwordEntryManager.SetIconFromExecutable(application);
