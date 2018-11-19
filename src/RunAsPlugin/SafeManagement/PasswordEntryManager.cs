@@ -44,6 +44,7 @@
         /// Initializes a new instance of the <see cref="PasswordEntryManager" /> class.
         /// For general interaction with a password entry.
         /// </summary>
+        /// <param name="database">The password database containing the entry.</param>
         /// <param name="entry">The password entry to interact with.</param>
         internal PasswordEntryManager(PwDatabase database, PwEntry entry)
         {
@@ -151,6 +152,7 @@
         /// Obtains a string from the password entry. Returns null if the string doesn't exist.
         /// </summary>
         /// <param name="field">The name of the string field.</param>
+        /// <param name="processReplacementTags">Determines if replacement tags should be processed or left as is.</param>
         /// <returns>The value of the string field.</returns>
         private string GetString(string field, bool processReplacementTags)
         {
