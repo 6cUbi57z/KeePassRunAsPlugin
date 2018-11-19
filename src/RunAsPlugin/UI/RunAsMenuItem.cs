@@ -1,12 +1,12 @@
-﻿using System;
-using System.Windows.Forms;
-using KeePass.Forms;
-using KeePassLib;
-using RunAsPlugin.Execution;
-using RunAsPlugin.SafeManagement;
-
-namespace RunAsPlugin.UI
+﻿namespace RunAsPlugin.UI
 {
+    using System;
+    using System.Windows.Forms;
+    using KeePass.Forms;
+    using KeePassLib;
+    using RunAsPlugin.Execution;
+    using RunAsPlugin.SafeManagement;
+
     /// <summary>
     /// The context menu item which executes the application as the specified user.
     /// </summary>

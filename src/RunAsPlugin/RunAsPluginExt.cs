@@ -1,10 +1,10 @@
-﻿using System.Windows.Forms;
-using KeePass.Plugins;
-using KeePass.UI;
-using RunAsPlugin.UI;
-
-namespace RunAsPlugin
+﻿namespace RunAsPlugin
 {
+    using System.Windows.Forms;
+    using KeePass.Plugins;
+    using KeePass.UI;
+    using RunAsPlugin.UI;
+
     /// <summary>
     /// Plugin entry class for RunAs KeePass plugin.
     /// </summary>

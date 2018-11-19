@@ -1,13 +1,13 @@
-﻿using System;
-using System.Windows.Forms;
-using KeePass.Forms;
-using KeePassLib;
-using RunAsPlugin.Models;
-using RunAsPlugin.SafeManagement;
-using RunAsPlugin.UI.EventArgs;
-
-namespace RunAsPlugin.UI
+﻿namespace RunAsPlugin.UI
 {
+    using System;
+    using System.Windows.Forms;
+    using KeePass.Forms;
+    using KeePassLib;
+    using RunAsPlugin.Models;
+    using RunAsPlugin.SafeManagement;
+    using RunAsPlugin.UI.EventArgs;
+
     /// <summary>
     /// Run As Options control for the password entry form.
     /// </summary>

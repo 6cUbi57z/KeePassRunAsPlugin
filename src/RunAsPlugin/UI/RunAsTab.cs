@@ -1,11 +1,11 @@
-﻿using System;
-using System.Windows.Forms;
-using KeePass.Forms;
-using RunAsPlugin.SafeManagement;
-using RunAsPlugin.UI.EventArgs;
-
-namespace RunAsPlugin.UI
+﻿namespace RunAsPlugin.UI
 {
+    using System;
+    using System.Windows.Forms;
+    using KeePass.Forms;
+    using RunAsPlugin.SafeManagement;
+    using RunAsPlugin.UI.EventArgs;
+
     /// <summary>
     /// Provides the "Run As" tab control in the password entry window.
     /// </summary>
