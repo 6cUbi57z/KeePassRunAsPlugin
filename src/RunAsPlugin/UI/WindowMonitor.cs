@@ -39,8 +39,8 @@
         {
             if (e.Form is PwEntryForm)
             {
-                PwEntryForm pwEntryForm = (PwEntryForm)e.Form;
-                pwEntryForm.Shown += this.PasswordEntryFormShown;
+                PwEntryForm passwordEntryForm = (PwEntryForm)e.Form;
+                passwordEntryForm.Shown += this.PasswordEntryFormShown;
             }
         }
 

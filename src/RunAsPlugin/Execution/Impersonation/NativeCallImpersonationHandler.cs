@@ -119,26 +119,26 @@ namespace RunAsPlugin.Execution.Impersonation
             #region Win32 Methods
             [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             public static extern int LogonUser(
-                string lpszUserName,
-                string lpszDomain,
-                string lpszPassword,
-                int dwLogonType,
-                int dwLogonProvider,
-                ref IntPtr phToken);
+                string userName,
+                string domain,
+                string password,
+                int logonType,
+                int logonProvider,
+                ref IntPtr token);
 
             [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             public static extern bool CreateProcessAsUser(
-                IntPtr hToken,
-                string lpApplicationName,
-                string lpCommandLine,
-                IntPtr lpProcessAttributes,
-                IntPtr lpThreadAttributes,
-                bool bInheritHandles,
-                int dwCreationFlags,
-                IntPtr lpEnvironment,
-                string lpCurrentDirectory,
-                ref StartupInfo lpStartupInfo,
-                out ProcessInformation lpProcessInformation);
+                IntPtr token,
+                string applicationName,
+                string commandLine,
+                IntPtr processAttributes,
+                IntPtr threadAttributes,
+                bool inheritHandles,
+                int creationFlags,
+                IntPtr environment,
+                string currentDirectory,
+                ref StartupInfo startupInfo,
+                out ProcessInformation processInformation);
 
             [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
             public static extern bool CreateProcessWithLogonW(
