@@ -12,14 +12,9 @@
     internal class RunAsTab : TabPage
     {
         /// <summary>
-        /// The text to display on the tab.
-        /// </summary>
-        private const string TAB_TITLE = "Run As";
-
-        /// <summary>
         /// The name of the tab container to search for and add the tab page to.
         /// </summary>
-        private const string TAB_CONTAINER_NAME = "m_tabMain";
+        private const string TabContainerName = "m_tabMain";
 
         /// <summary>
         /// The manager used for interacting with the open password entry.
@@ -32,7 +27,7 @@
         /// <param name="container">The password entry form.</param>
         /// <param name="passwordEntryManager">The manager used for interacting with the open password entry.</param>
         internal RunAsTab(PwEntryForm container, PasswordEntryManager passwordEntryManager)
-            : base(TAB_TITLE)
+            : base(UiStrings.TabTitle)
         {
             this.passwordEntryManager = passwordEntryManager;
 
@@ -61,10 +56,10 @@
         /// Find the tab container.
         /// </summary>
         /// <param name="container">The password entry form.</param>
-        /// <returns>The tab container with the name defined in <see cref="TAB_CONTAINER_NAME"/>.</returns>
+        /// <returns>The tab container with the name defined in <see cref="TabContainerName"/>.</returns>
         private TabControl GetTabContainer(PwEntryForm container)
         {
-            Control[] matchedControls = container.Controls.Find(TAB_CONTAINER_NAME, true);
+            Control[] matchedControls = container.Controls.Find(TabContainerName, true);
             if (matchedControls.Length == 0)
             {
                 throw new System.Exception("Tab container not found.");

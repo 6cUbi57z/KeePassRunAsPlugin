@@ -16,7 +16,7 @@
         /// <summary>
         /// The filter options available in the browse dialog.
         /// </summary>
-        private const string BROWSE_APPLICATION_FILTER = "Application (*.exe)|*.exe|All files (*.*)|*.*";
+        private const string BrowseApplicationFilter = "Application (*.exe)|*.exe|All files (*.*)|*.*";
 
         /// <summary>
         /// The manager used for interacting with the open password entry.
@@ -68,7 +68,7 @@
             using (OpenFileDialog openDialog = new OpenFileDialog())
             {
                 openDialog.InitialDirectory = currentApplication;
-                openDialog.Filter = BROWSE_APPLICATION_FILTER;
+                openDialog.Filter = BrowseApplicationFilter;
                 openDialog.RestoreDirectory = true;
 
                 if (openDialog.ShowDialog() == DialogResult.OK)

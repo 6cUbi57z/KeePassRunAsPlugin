@@ -13,11 +13,6 @@
     public class RunAsMenuItem : ToolStripMenuItem
     {
         /// <summary>
-        /// The text displayed on the menu item.
-        /// </summary>
-        private const string MENU_ITEM_TEXT = "Run Application as User";
-
-        /// <summary>
         /// The main KeePass window.
         /// </summary>
         private readonly MainForm mainWindow;
@@ -27,7 +22,7 @@
         /// </summary>
         /// <param name="mainWindow">The main KeePass window.</param>
         internal RunAsMenuItem(MainForm mainWindow)
-            : base(MENU_ITEM_TEXT)
+            : base(UiStrings.RunAsMenuItemText)
         {
             this.mainWindow = mainWindow;
 
