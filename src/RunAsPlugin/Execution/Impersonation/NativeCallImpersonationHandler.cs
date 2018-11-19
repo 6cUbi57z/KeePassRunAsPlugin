@@ -127,7 +127,7 @@ namespace RunAsPlugin.Execution.Impersonation
                 ref IntPtr phToken);
 
             [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-            public static extern Boolean CreateProcessAsUser(
+            public static extern bool CreateProcessAsUser(
                 IntPtr hToken,
                 string lpApplicationName,
                 string lpCommandLine,
@@ -141,21 +141,21 @@ namespace RunAsPlugin.Execution.Impersonation
                 out ProcessInformation lpProcessInformation);
 
             [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-            public static extern Boolean CreateProcessWithLogonW(
-                String userName,
-                String domain,
-                String password,
-                UInt32 logonFlags,
-                String applicationName,
-                String commandLine,
-                UInt32 creationFlags,
+            public static extern bool CreateProcessWithLogonW(
+                string userName,
+                string domain,
+                string password,
+                uint logonFlags,
+                string applicationName,
+                string commandLine,
+                uint creationFlags,
                 IntPtr environment,
-                String currentDirectory,
+                string currentDirectory,
                 ref StartupInfo startupInfo,
                 out ProcessInformation processInformation);
 
             [DllImport("kernel32", SetLastError = true)]
-            public static extern Boolean CloseHandle(IntPtr handle);
+            public static extern bool CloseHandle(IntPtr handle);
             #endregion
 
             #region structs
@@ -163,9 +163,9 @@ namespace RunAsPlugin.Execution.Impersonation
             public struct StartupInfo
             {
                 public int cb;
-                public String reserved;
-                public String desktop;
-                public String title;
+                public string reserved;
+                public string desktop;
+                public string title;
                 public int x;
                 public int y;
                 public int xSize;
@@ -174,8 +174,8 @@ namespace RunAsPlugin.Execution.Impersonation
                 public int yCountChars;
                 public int fillAttribute;
                 public int flags;
-                public UInt16 showWindow;
-                public UInt16 reserved2;
+                public ushort showWindow;
+                public ushort reserved2;
                 public byte reserved3;
                 public IntPtr stdInput;
                 public IntPtr stdOutput;
