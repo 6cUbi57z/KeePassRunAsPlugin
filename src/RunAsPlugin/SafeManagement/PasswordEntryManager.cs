@@ -52,6 +52,12 @@
             this.entryStrings = entry.Strings;
         }
 
+        public string ProcessReplacementTags(ProtectedString protectedString)
+        {
+            SprContext context = new SprContext(this.entry, this.database, SprCompileFlags.All);
+            return SprEngine.Compile(protectedString.ReadString(), context);
+        }
+
         /// <summary>
         /// Gets the run as settings from the password entry.
         /// </summary>
@@ -113,6 +119,23 @@
             };
         }
 
+        internal PwCustomIcon SetIconFromExecutable(string executable)
+        {
+            ExecutableIcon exeIcon = new ExecutableIcon(executable);
+            PwCustomIcon icon = exeIcon.GetCustomIcon();
+
+            // Check for existing icons.
+            if (!this.IconExists(icon))
+            {
+                this.AddIconToDatabase(icon);
+            }
+
+            this.entry.CustomIconUuid = icon.Uuid;
+            this.entry.Touch(true, false);
+
+            return icon;
+        }
+
         /// <summary>
         /// Sets a string value on the password entry.
         /// </summary>
@@ -122,12 +145,6 @@
         {
             ProtectedString protectedString = new ProtectedString(false, value.ToString());
             this.entryStrings.Set(field, protectedString);
-        }
-
-        public string ProcessReplacementTags(ProtectedString protectedString)
-        {
-            SprContext context = new SprContext(this.entry, this.database, SprCompileFlags.All);
-            return SprEngine.Compile(protectedString.ReadString(), context);
         }
 
         /// <summary>
@@ -165,23 +182,6 @@
             string stringValue = this.GetString(field, true);
             bool.TryParse(stringValue, out boolValue);
             return boolValue;
-        }
-
-        internal PwCustomIcon SetIconFromExecutable(string executable)
-        {
-            ExecutableIcon exeIcon = new ExecutableIcon(executable);
-            PwCustomIcon icon = exeIcon.GetCustomIcon();
-
-            // Check for existing icons.
-            if (!this.IconExists(icon))
-            {
-                this.AddIconToDatabase(icon);
-            }
-
-            this.entry.CustomIconUuid = icon.Uuid;
-            this.entry.Touch(true, false);
-
-            return icon;
         }
 
         private bool IconExists(PwCustomIcon icon)
