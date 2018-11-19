@@ -64,7 +64,7 @@
             const string CUSTOM_ICON_UUID_FORM_FIELD = "m_pwCustomIconID";
             const string ENTRY_ICON_BUTTON_NAME = "m_btnIcon";
 
-            PwEntryForm entryForm = ((PwEntryForm)((Control)sender).FindForm());
+            PwEntryForm entryForm = (PwEntryForm)((Control)sender).FindForm();
 
             // Icon for the password entry has been updated by the run as tab so update the UI.
             try

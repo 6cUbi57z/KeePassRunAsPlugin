@@ -81,7 +81,6 @@
             }
 
             // TODO: Add confirmation when executing more than one application.
-
             foreach (PwEntry entry in selectedEntries)
             {
                 PasswordEntryManager entryManager = new PasswordEntryManager(this.mainWindow.ActiveDatabase, entry);
@@ -95,9 +94,9 @@
                 catch (ApplicationExecutionException ex)
                 {
                     // If there was an error, display a suitable error message.
-                    string errorMessage = string.Concat(
-                        "Unable to execute application for password entry '", entryManager.GetTitle(), "':",
-                        Environment.NewLine,
+                    string errorMessage = string.Format(
+                        "Unable to execute application for password entry '{0}':{1}{1}{2}",
+                        entryManager.GetTitle(),
                         Environment.NewLine,
                         ex.Message);
 
