@@ -3,7 +3,6 @@
 ## Unreleased ##
 
 * **Added:** Support for command line arguments (#18).
-* **Added:** Support for setting working directory.
 
 ## 0.3 ##
 

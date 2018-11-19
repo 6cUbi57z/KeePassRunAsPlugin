@@ -21,11 +21,6 @@
         internal string Arguments { get; set; }
 
         /// <summary>
-        /// The working dir to launch the application from.
-        /// </summary>
-        internal string WorkingDir { get; set; }
-
-        /// <summary>
         /// Determines if the impersonation should use the "Net Only" option.
         /// </summary>
         /// <remarks>

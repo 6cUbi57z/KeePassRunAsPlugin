@@ -58,8 +58,7 @@ namespace RunAsPlugin.SafeManagement
         {
             bool isEnabled = this.GetBool(FieldNames.RunAs.IsEnabled);
             string application = this.GetString(FieldNames.RunAs.Application, false);
-            string arguments = this.GetString(FieldNames.RunAs.Arguments, false);
-            string workingDir = this.GetString(FieldNames.RunAs.WorkingDir, false);
+            string arguments = this.GetString(FieldNames.RunAs.Arguments, true);
             bool isNetOnly = this.GetBool(FieldNames.RunAs.NetOnly);
 
             return new RunAsEntrySettings()
@@ -67,7 +66,6 @@ namespace RunAsPlugin.SafeManagement
                 IsEnabled = isEnabled,
                 Application = application,
                 Arguments = arguments,
-                WorkingDir = workingDir,
                 IsNetOnly = isNetOnly
             };
         }
@@ -81,7 +79,6 @@ namespace RunAsPlugin.SafeManagement
             this.SetString(FieldNames.RunAs.IsEnabled, settings.IsEnabled);
             this.SetString(FieldNames.RunAs.Application, settings.Application);
             this.SetString(FieldNames.RunAs.Arguments, settings.Arguments);
-            this.SetString(FieldNames.RunAs.WorkingDir, settings.WorkingDir);
             this.SetString(FieldNames.RunAs.NetOnly, settings.IsNetOnly);
         }
 
@@ -106,7 +103,6 @@ namespace RunAsPlugin.SafeManagement
                 Password = this.entryStrings.Get(FieldNames.Password),
                 NetOnly = this.GetBool(FieldNames.RunAs.NetOnly),
                 Application = this.GetString(FieldNames.RunAs.Application, true),
-                WorkingDir = this.GetString(FieldNames.RunAs.WorkingDir, true),
                 Arguments = this.GetString(FieldNames.RunAs.Arguments, true)
             };
         }

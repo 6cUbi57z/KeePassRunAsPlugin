@@ -57,7 +57,7 @@ namespace RunAsPlugin.UI
 
         #region UI Events
         /// <summary>
-        /// Event handler triggered when the browse applicaiton button is clicked.
+        /// Event handler triggered when the browse button is clicked.
         /// </summary>
         /// <param name="sender">The object which triggered the event.</param>
         /// <param name="e">The event arguments.</param>
@@ -74,28 +74,8 @@ namespace RunAsPlugin.UI
                 if (openDialog.ShowDialog() == DialogResult.OK)
                 {
                     string selectedApplication = openDialog.FileName;
+
                     this.application.Text = selectedApplication;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Event handler triggered when the browse working dir button is clicked.
-        /// </summary>
-        /// <param name="sender">The object which triggered the event.</param>
-        /// <param name="e">The event arguments.</param>
-        private void workingDirBrowse_Click(object sender, System.EventArgs e)
-        {
-            string currentWorkingDir = this.workingDir.Text;
-
-            using (FolderBrowserDialog openDialog = new FolderBrowserDialog())
-            {
-                openDialog.SelectedPath = currentWorkingDir;
-
-                if (openDialog.ShowDialog() == DialogResult.OK)
-                {
-                    currentWorkingDir = openDialog.SelectedPath;
-                    this.workingDir.Text = currentWorkingDir;
                 }
             }
         }
@@ -138,7 +118,6 @@ namespace RunAsPlugin.UI
             this.application.Enabled = isEnabled;
             this.applicationBrowse.Enabled = isEnabled;
             this.arguments.Enabled = isEnabled;
-            this.workingDir.Enabled = isEnabled;
             this.netOnly.Enabled = isEnabled;
             this.setIcon.Enabled = isEnabled;
         }
@@ -153,7 +132,6 @@ namespace RunAsPlugin.UI
             this.enableRunAs.Checked = this.settings.IsEnabled;
             this.application.Text = this.settings.Application;
             this.arguments.Text = this.settings.Arguments;
-            this.workingDir.Text = this.settings.WorkingDir;
             this.netOnly.Checked = this.settings.IsNetOnly;
 
             this.SetRunAsEnabledState(this.settings.IsEnabled);
@@ -167,13 +145,11 @@ namespace RunAsPlugin.UI
             bool isEnabled = this.enableRunAs.Checked;
             string application = this.application.Text;
             string arguments = this.arguments.Text;
-            string workingDir = this.workingDir.Text;
             bool isNetOnly = this.netOnly.Checked;
 
             this.settings.IsEnabled = isEnabled;
             this.settings.Application = application;
             this.settings.Arguments = arguments;
-            this.settings.WorkingDir = workingDir;
             this.settings.IsNetOnly = isNetOnly;
 
             this.passwordEntryManager.SetRunAsSettings(this.settings);

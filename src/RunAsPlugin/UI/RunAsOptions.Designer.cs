@@ -29,17 +29,14 @@
         private void InitializeComponent()
         {
             this.runAsGroupBox = new System.Windows.Forms.GroupBox();
-            this.argumentsLabel = new System.Windows.Forms.Label();
-            this.arguments = new System.Windows.Forms.TextBox();
             this.setIcon = new System.Windows.Forms.Button();
             this.netOnly = new System.Windows.Forms.CheckBox();
             this.applicationBrowse = new System.Windows.Forms.Button();
             this.application = new System.Windows.Forms.TextBox();
             this.applicationLabel = new System.Windows.Forms.Label();
             this.enableRunAs = new System.Windows.Forms.CheckBox();
-            this.workingDir = new System.Windows.Forms.TextBox();
-            this.workingDirLabel = new System.Windows.Forms.Label();
-            this.workingDirBrowse = new System.Windows.Forms.Button();
+            this.arguments = new System.Windows.Forms.TextBox();
+            this.argumentsLabel = new System.Windows.Forms.Label();
             this.runAsGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,9 +44,6 @@
             // 
             this.runAsGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.runAsGroupBox.Controls.Add(this.workingDirBrowse);
-            this.runAsGroupBox.Controls.Add(this.workingDirLabel);
-            this.runAsGroupBox.Controls.Add(this.workingDir);
             this.runAsGroupBox.Controls.Add(this.argumentsLabel);
             this.runAsGroupBox.Controls.Add(this.arguments);
             this.runAsGroupBox.Controls.Add(this.setIcon);
@@ -60,34 +54,16 @@
             this.runAsGroupBox.Controls.Add(this.enableRunAs);
             this.runAsGroupBox.Location = new System.Drawing.Point(3, 3);
             this.runAsGroupBox.Name = "runAsGroupBox";
-            this.runAsGroupBox.Size = new System.Drawing.Size(418, 155);
+            this.runAsGroupBox.Size = new System.Drawing.Size(418, 128);
             this.runAsGroupBox.TabIndex = 0;
             this.runAsGroupBox.TabStop = false;
-            // 
-            // argumentsLabel
-            // 
-            this.argumentsLabel.AutoSize = true;
-            this.argumentsLabel.Location = new System.Drawing.Point(6, 53);
-            this.argumentsLabel.Name = "argumentsLabel";
-            this.argumentsLabel.Size = new System.Drawing.Size(57, 13);
-            this.argumentsLabel.TabIndex = 7;
-            this.argumentsLabel.Text = "Arguments";
-            // 
-            // arguments
-            // 
-            this.arguments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.arguments.Location = new System.Drawing.Point(104, 50);
-            this.arguments.Name = "arguments";
-            this.arguments.Size = new System.Drawing.Size(227, 20);
-            this.arguments.TabIndex = 6;
             // 
             // setIcon
             // 
             this.setIcon.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.setIcon.Enabled = false;
-            this.setIcon.Location = new System.Drawing.Point(6, 126);
+            this.setIcon.Location = new System.Drawing.Point(6, 99);
             this.setIcon.Name = "setIcon";
             this.setIcon.Size = new System.Drawing.Size(406, 23);
             this.setIcon.TabIndex = 5;
@@ -99,7 +75,7 @@
             // 
             this.netOnly.AutoSize = true;
             this.netOnly.Enabled = false;
-            this.netOnly.Location = new System.Drawing.Point(104, 103);
+            this.netOnly.Location = new System.Drawing.Point(71, 76);
             this.netOnly.Name = "netOnly";
             this.netOnly.Size = new System.Drawing.Size(182, 17);
             this.netOnly.TabIndex = 4;
@@ -123,9 +99,9 @@
             this.application.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.application.Enabled = false;
-            this.application.Location = new System.Drawing.Point(104, 23);
+            this.application.Location = new System.Drawing.Point(71, 23);
             this.application.Name = "application";
-            this.application.Size = new System.Drawing.Size(227, 20);
+            this.application.Size = new System.Drawing.Size(260, 20);
             this.application.TabIndex = 2;
             // 
             // applicationLabel
@@ -148,34 +124,23 @@
             this.enableRunAs.UseVisualStyleBackColor = true;
             this.enableRunAs.CheckedChanged += new System.EventHandler(this.enableRunAs_CheckedChanged);
             // 
-            // workingDir
+            // arguments
             // 
-            this.workingDir.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.arguments.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.workingDir.Location = new System.Drawing.Point(104, 77);
-            this.workingDir.Name = "workingDir";
-            this.workingDir.Size = new System.Drawing.Size(227, 20);
-            this.workingDir.TabIndex = 8;
+            this.arguments.Location = new System.Drawing.Point(71, 50);
+            this.arguments.Name = "arguments";
+            this.arguments.Size = new System.Drawing.Size(260, 20);
+            this.arguments.TabIndex = 6;
             // 
-            // workingDirLabel
+            // argumentsLabel
             // 
-            this.workingDirLabel.AutoSize = true;
-            this.workingDirLabel.Location = new System.Drawing.Point(6, 80);
-            this.workingDirLabel.Name = "workingDirLabel";
-            this.workingDirLabel.Size = new System.Drawing.Size(92, 13);
-            this.workingDirLabel.TabIndex = 9;
-            this.workingDirLabel.Text = "Working Directory";
-            // 
-            // workingDirBrowse
-            // 
-            this.workingDirBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.workingDirBrowse.Location = new System.Drawing.Point(337, 75);
-            this.workingDirBrowse.Name = "workingDirBrowse";
-            this.workingDirBrowse.Size = new System.Drawing.Size(75, 23);
-            this.workingDirBrowse.TabIndex = 10;
-            this.workingDirBrowse.Text = "Browse...";
-            this.workingDirBrowse.UseVisualStyleBackColor = true;
-            this.workingDirBrowse.Click += new System.EventHandler(this.workingDirBrowse_Click);
+            this.argumentsLabel.AutoSize = true;
+            this.argumentsLabel.Location = new System.Drawing.Point(6, 53);
+            this.argumentsLabel.Name = "argumentsLabel";
+            this.argumentsLabel.Size = new System.Drawing.Size(57, 13);
+            this.argumentsLabel.TabIndex = 7;
+            this.argumentsLabel.Text = "Arguments";
             // 
             // RunAsOptions
             // 
@@ -184,7 +149,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.runAsGroupBox);
             this.Name = "RunAsOptions";
-            this.Size = new System.Drawing.Size(424, 163);
+            this.Size = new System.Drawing.Size(424, 134);
             this.runAsGroupBox.ResumeLayout(false);
             this.runAsGroupBox.PerformLayout();
             this.ResumeLayout(false);
@@ -202,8 +167,5 @@
         private System.Windows.Forms.Button setIcon;
         private System.Windows.Forms.Label argumentsLabel;
         private System.Windows.Forms.TextBox arguments;
-        private System.Windows.Forms.Button workingDirBrowse;
-        private System.Windows.Forms.Label workingDirLabel;
-        private System.Windows.Forms.TextBox workingDir;
     }
 }
