@@ -1,7 +1,7 @@
-﻿using System.Windows.Forms;
-
-namespace RunAsPlugin.Utils
+﻿namespace RunAsPlugin.Utils
 {
+    using System.Windows.Forms;
+
     internal static class UIUtils
     {
         public static TControl GetControlByName<TControl>(Form parentForm, string controlName) where TControl : Control

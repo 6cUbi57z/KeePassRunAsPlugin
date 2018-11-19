@@ -1,15 +1,15 @@
-﻿using System;
-using System.Reflection;
-using System.Windows.Forms;
-using KeePass.Forms;
-using KeePass.Plugins;
-using KeePass.UI;
-using RunAsPlugin.SafeManagement;
-using RunAsPlugin.UI.EventArgs;
-using RunAsPlugin.Utils;
-
-namespace RunAsPlugin.UI
+﻿namespace RunAsPlugin.UI
 {
+    using System;
+    using System.Reflection;
+    using System.Windows.Forms;
+    using KeePass.Forms;
+    using KeePass.Plugins;
+    using KeePass.UI;
+    using RunAsPlugin.SafeManagement;
+    using RunAsPlugin.UI.EventArgs;
+    using RunAsPlugin.Utils;
+
     /// <summary>
     /// Monitors for password entry windows created by KeePass to modify them with the run as settings.
     /// </summary>

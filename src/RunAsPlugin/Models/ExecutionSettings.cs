@@ -1,7 +1,7 @@
-﻿using KeePassLib.Security;
-
-namespace RunAsPlugin.Models
+﻿namespace RunAsPlugin.Models
 {
+    using KeePassLib.Security;
+
     /// <summary>
     /// Settings to be used when impersonating.
     /// </summary>

@@ -1,11 +1,11 @@
-using System;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
-using RunAsPlugin.Models;
-using RunAsPlugin.SafeManagement;
-
 namespace RunAsPlugin.Execution.Impersonation
 {
+    using System;
+    using System.ComponentModel;
+    using System.Runtime.InteropServices;
+    using RunAsPlugin.Models;
+    using RunAsPlugin.SafeManagement;
+
     internal class NativeCallImpersonationHandler : IImpersonationHandler
     {
         public void ExecuteApplication(PasswordEntryManager entryManager)

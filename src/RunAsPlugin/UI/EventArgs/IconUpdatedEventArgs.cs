@@ -1,7 +1,7 @@
-﻿using KeePassLib;
-
-namespace RunAsPlugin.UI.EventArgs
+﻿namespace RunAsPlugin.UI.EventArgs
 {
+    using KeePassLib;
+
     public class IconUpdatedEventArgs
     {
         private readonly PwCustomIcon newIcon;

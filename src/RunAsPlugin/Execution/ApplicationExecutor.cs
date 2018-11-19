@@ -1,11 +1,11 @@
-﻿using System;
-using System.IO;
-using RunAsPlugin.Execution.Impersonation;
-using RunAsPlugin.Models;
-using RunAsPlugin.SafeManagement;
-
-namespace RunAsPlugin.Execution
+﻿namespace RunAsPlugin.Execution
 {
+    using System;
+    using System.IO;
+    using RunAsPlugin.Execution.Impersonation;
+    using RunAsPlugin.Models;
+    using RunAsPlugin.SafeManagement;
+
     internal class ApplicationExecutor
     {
         private readonly PasswordEntryManager entryManager;

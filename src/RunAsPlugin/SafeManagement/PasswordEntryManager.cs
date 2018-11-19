@@ -1,12 +1,12 @@
-﻿using KeePass.Forms;
-using KeePass.Util.Spr;
-using KeePassLib;
-using KeePassLib.Collections;
-using KeePassLib.Security;
-using RunAsPlugin.Models;
-
-namespace RunAsPlugin.SafeManagement
+﻿namespace RunAsPlugin.SafeManagement
 {
+    using KeePass.Forms;
+    using KeePass.Util.Spr;
+    using KeePassLib;
+    using KeePassLib.Collections;
+    using KeePassLib.Security;
+    using RunAsPlugin.Models;
+
     /// <summary>
     /// The manager used for interacting with the open password entry.
     /// </summary>

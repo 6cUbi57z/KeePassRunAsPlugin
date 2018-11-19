@@ -1,9 +1,20 @@
-﻿using System;
-
-[Serializable]
-public class ApplicationExecutionException : Exception
+﻿namespace RunAsPlugin.Execution
 {
-    public ApplicationExecutionException(string message) : base(message) { }
+    using System;
 
-    public ApplicationExecutionException(string message, Exception inner) : base(message, inner) { }
+    [Serializable]
+    public class ApplicationExecutionException : Exception
+    {
+        public ApplicationExecutionException(string message)
+            : base(message)
+        {
+            // Nothing to do.
+        }
+
+        public ApplicationExecutionException(string message, Exception inner)
+            : base(message, inner)
+        {
+            // Nothing to do.
+        }
+    }
 }

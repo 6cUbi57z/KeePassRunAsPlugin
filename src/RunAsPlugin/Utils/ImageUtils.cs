@@ -1,10 +1,10 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-
-namespace RunAsPlugin.Utils
+﻿namespace RunAsPlugin.Utils
 {
+    using System;
+    using System.Drawing;
+    using System.Drawing.Imaging;
+    using System.IO;
+
     internal static class ImageUtils
     {
         public static Image ScaleImage(Image image, int maxWidth, int maxHeight)

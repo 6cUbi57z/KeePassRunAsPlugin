@@ -1,10 +1,10 @@
-﻿using System.Drawing;
-using System.Security.Cryptography;
-using KeePassLib;
-using RunAsPlugin.Utils;
-
-namespace RunAsPlugin.SafeManagement
+﻿namespace RunAsPlugin.SafeManagement
 {
+    using System.Drawing;
+    using System.Security.Cryptography;
+    using KeePassLib;
+    using RunAsPlugin.Utils;
+
     internal class ExecutableIcon
     {
         private string executable;
