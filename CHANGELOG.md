@@ -1,6 +1,6 @@
 # Changelog #
 
-## Unreleased ##
+## v0.4 ##
 
 * **Added:** Support for command line arguments (#18).
 * **Added:** Support for setting working directory.
