@@ -159,6 +159,9 @@ namespace RunAsPlugin.Execution.Impersonation
             #endregion
 
             #region structs
+            /// <summary>
+            /// Implementation of Win32 _STARTUPINFOA structure documented at https://docs.microsoft.com/en-us/windows/desktop/api/processthreadsapi/ns-processthreadsapi-_startupinfoa.
+            /// </summary>
             [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
             public struct StartupInfo
             {
@@ -182,6 +185,9 @@ namespace RunAsPlugin.Execution.Impersonation
                 public IntPtr StdError;
             }
 
+            /// <summary>
+            /// Implementation of Win32 _PROCESS_INFORMATION structure documented at https://docs.microsoft.com/en-gb/windows/desktop/api/processthreadsapi/ns-processthreadsapi-_process_information
+            /// </summary>
             [StructLayout(LayoutKind.Sequential)]
             public struct ProcessInformation
             {
