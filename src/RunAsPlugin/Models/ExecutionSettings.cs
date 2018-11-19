@@ -85,5 +85,10 @@ namespace RunAsPlugin.Models
         /// The arguments to pass to the application.
         /// </summary>
         public string Arguments { get; set; }
+
+        /// <summary>
+        /// The working directory to start the application from.
+        /// </summary>
+        public string WorkingDir { get; set; }
     }
 }

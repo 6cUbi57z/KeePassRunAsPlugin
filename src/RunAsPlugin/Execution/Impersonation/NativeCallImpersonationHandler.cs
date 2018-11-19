@@ -18,6 +18,7 @@ namespace RunAsPlugin.Execution.Impersonation
             Win32.LogonFlags logonFlags = settings.NetOnly ? Win32.LogonFlags.LOGON_NETCREDENTIALS_ONLY : Win32.LogonFlags.LOGON_WITH_PROFILE;
             string application = settings.Application;
             string arguments = settings.Arguments;
+            string workingDir = string.IsNullOrWhiteSpace(settings.WorkingDir) ? null : settings.WorkingDir;
 
             // Create variables required for impersonation handling.
             IntPtr token = IntPtr.Zero;
@@ -38,7 +39,7 @@ namespace RunAsPlugin.Execution.Impersonation
                     arguments,
                     0,
                     IntPtr.Zero,
-                    null,
+                    workingDir,
                     ref startupInfo,
                     out processInfo);
 
