@@ -86,8 +86,8 @@
                     true);
 
                 // Finally, update the password entry list.
-                host.MainWindow.RefreshEntriesList();
-                host.MainWindow.UpdateUI(false, null, false, null, true, null, true);
+                this.host.MainWindow.RefreshEntriesList();
+                this.host.MainWindow.UpdateUI(false, null, false, null, true, null, true);
 
                 MessageBox.Show(entryForm, "Password Entry icon updated.", "Icon Updated");
             }

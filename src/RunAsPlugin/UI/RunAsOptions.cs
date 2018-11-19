@@ -37,7 +37,7 @@ namespace RunAsPlugin.UI
         /// <param name="passwordEntryManager">The manager used for interacting with the open password entry.</param>
         public RunAsOptions(PwEntryForm entryForm, PasswordEntryManager passwordEntryManager)
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             this.passwordEntryManager = passwordEntryManager;
 
