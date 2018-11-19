@@ -28,7 +28,7 @@ namespace RunAsPlugin.Execution.Impersonation
             try
             {
                 // Create process
-                startupInfo.cb = Marshal.SizeOf(startupInfo);
+                startupInfo.Cb = Marshal.SizeOf(startupInfo);
 
                 bool result = Win32.CreateProcessWithLogonW(
                     username,
@@ -61,14 +61,14 @@ namespace RunAsPlugin.Execution.Impersonation
             }
             finally
             {
-                if (processInfo.process != IntPtr.Zero)
+                if (processInfo.Process != IntPtr.Zero)
                 {
-                    Win32.CloseHandle(processInfo.process);
+                    Win32.CloseHandle(processInfo.Process);
                 }
 
-                if (processInfo.thread != IntPtr.Zero)
+                if (processInfo.Thread != IntPtr.Zero)
                 {
-                    Win32.CloseHandle(processInfo.thread);
+                    Win32.CloseHandle(processInfo.Thread);
                 }
             }
         }
@@ -162,33 +162,33 @@ namespace RunAsPlugin.Execution.Impersonation
             [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
             public struct StartupInfo
             {
-                public int cb;
-                public string reserved;
-                public string desktop;
-                public string title;
-                public int x;
-                public int y;
-                public int xSize;
-                public int ySize;
-                public int xCountChars;
-                public int yCountChars;
-                public int fillAttribute;
-                public int flags;
-                public ushort showWindow;
-                public ushort reserved2;
-                public byte reserved3;
-                public IntPtr stdInput;
-                public IntPtr stdOutput;
-                public IntPtr stdError;
+                public int Cb;
+                public string Reserved;
+                public string Desktop;
+                public string Title;
+                public int X;
+                public int Y;
+                public int XSize;
+                public int YSize;
+                public int XCountChars;
+                public int YCountChars;
+                public int FillAttribute;
+                public int Flags;
+                public ushort ShowWindow;
+                public ushort Reserved2;
+                public byte Reserved3;
+                public IntPtr StdInput;
+                public IntPtr StdOutput;
+                public IntPtr StdError;
             }
 
             [StructLayout(LayoutKind.Sequential)]
             public struct ProcessInformation
             {
-                public IntPtr process;
-                public IntPtr thread;
-                public int processId;
-                public int threadId;
+                public IntPtr Process;
+                public IntPtr Thread;
+                public int ProcessId;
+                public int ThreadId;
             }
             #endregion
         }
