@@ -8,7 +8,7 @@ namespace RunAsPlugin.Execution.Impersonation
 {
     internal class NativeCallImpersonationHandler : IImpersonationHandler
     {
-        public void ExecuteApplication(string application, PasswordEntryManager entryManager)
+        public void ExecuteApplication(PasswordEntryManager entryManager)
         {
             ExecutionSettings settings = entryManager.GetExecutionSettings();
 
@@ -16,6 +16,9 @@ namespace RunAsPlugin.Execution.Impersonation
             string domain = settings.Domain;
             string username = settings.Username;
             Win32.LogonFlags logonFlags = settings.NetOnly ? Win32.LogonFlags.LOGON_NETCREDENTIALS_ONLY : Win32.LogonFlags.LOGON_WITH_PROFILE;
+            string application = settings.Application;
+            string arguments = settings.Arguments;
+            string workingDir = string.IsNullOrWhiteSpace(settings.WorkingDir) ? null : settings.WorkingDir;
 
             // Create variables required for impersonation handling.
             IntPtr token = IntPtr.Zero;
@@ -33,10 +36,10 @@ namespace RunAsPlugin.Execution.Impersonation
                     entryManager.ProcessReplacementTags(settings.Password),
                     (uint)logonFlags,
                     application,
-                    null,
+                    arguments,
                     0,
                     IntPtr.Zero,
-                    null,
+                    workingDir,
                     ref startupInfo,
                     out processInfo);
 

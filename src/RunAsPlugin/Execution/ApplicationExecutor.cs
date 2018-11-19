@@ -42,10 +42,15 @@ namespace RunAsPlugin.Execution
                 throw new ApplicationExecutionException("No password present.");
             }
 
+            if (!string.IsNullOrWhiteSpace(this.settings.WorkingDir) && !Directory.Exists(this.settings.WorkingDir))
+            {
+                throw new ApplicationExecutionException(string.Format("Working directory '{0}' does not exist.", this.settings.WorkingDir));
+            }
+
             try
             {
                 IImpersonationHandler impersonation = new NativeCallImpersonationHandler();
-                impersonation.ExecuteApplication(this.settings.Application, this.entryManager);
+                impersonation.ExecuteApplication(this.entryManager);
             }
             catch (Exception ex)
             {

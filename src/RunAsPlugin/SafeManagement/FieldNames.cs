@@ -36,6 +36,16 @@
             internal const string Application = "RunAs.Application";
 
             /// <summary>
+            /// The field name for the application arguments run as setting of the password entry.
+            /// </summary>
+            internal const string Arguments = "RunAs.Arguments";
+
+            /// <summary>
+            /// The field name for the working directory run as setting of the password entry.
+            /// </summary>
+            internal const string WorkingDir = "RunAs.WorkingDir";
+
+            /// <summary>
             /// The field name for the NetOnly run as setting of the password entry.
             /// </summary>
             internal const string NetOnly = "RunAs.NetOnly";
