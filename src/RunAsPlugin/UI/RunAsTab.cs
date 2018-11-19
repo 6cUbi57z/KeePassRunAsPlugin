@@ -11,8 +11,6 @@
     /// </summary>
     internal class RunAsTab : TabPage
     {
-        public event EventHandler<IconUpdatedEventArgs> EntryIconUpdated;
-
         /// <summary>
         /// The text to display on the tab.
         /// </summary>
@@ -48,6 +46,8 @@
             optionsControl.Dock = DockStyle.Fill;
             this.Controls.Add(optionsControl);
         }
+
+        public event EventHandler<IconUpdatedEventArgs> EntryIconUpdated;
 
         private void OptionsControl_EntryIconUpdated(object sender, IconUpdatedEventArgs e)
         {

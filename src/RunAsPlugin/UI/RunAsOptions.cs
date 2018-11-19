@@ -13,8 +13,6 @@
     /// </summary>
     public partial class RunAsOptions : UserControl
     {
-        public event EventHandler<IconUpdatedEventArgs> EntryIconUpdated;
-
         /// <summary>
         /// The filter options available in the browse dialog.
         /// </summary>
@@ -44,6 +42,8 @@
             this.LoadSettings();
             entryForm.EntrySaving += this.Container_EntrySaving;
         }
+
+        public event EventHandler<IconUpdatedEventArgs> EntryIconUpdated;
 
         /// <summary>
         /// Event handler triggered when the password entry is being saved.
