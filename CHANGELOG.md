@@ -1,5 +1,10 @@
 # Changelog #
 
+## v0.5 ##
+
+* **Fixed:** Shortcut changed to Ctrl+E to avoid conflict with KeePass Open Group shortcut (#24).
+* **Fixed:** Settings strings are now only present if they are different from the default.
+
 ## v0.4 ##
 
 * **Added:** Support for command line arguments (#18).

@@ -36,7 +36,7 @@ namespace RunAsPlugin
 
             RunAsMenuItem runAsMenuItem = new RunAsMenuItem(host.MainWindow);
             runAsMenuItem.AddToContextMenu(host.MainWindow.EntryContextMenu);
-            UIUtil.AssignShortcut(runAsMenuItem, Keys.Control | Keys.G);
+            UIUtil.AssignShortcut(runAsMenuItem, Keys.Control | Keys.E);
 
             // Return true for a successful startup.
             return true;
