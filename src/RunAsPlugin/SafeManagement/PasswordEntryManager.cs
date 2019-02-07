@@ -4,6 +4,7 @@ using KeePassLib;
 using KeePassLib.Collections;
 using KeePassLib.Security;
 using RunAsPlugin.Models;
+using System;
 
 namespace RunAsPlugin.SafeManagement
 {
@@ -57,9 +58,9 @@ namespace RunAsPlugin.SafeManagement
         internal RunAsEntrySettings GetRunAsSettings()
         {
             bool isEnabled = this.GetBool(FieldNames.RunAs.IsEnabled);
-            string application = this.GetString(FieldNames.RunAs.Application, false);
-            string arguments = this.GetString(FieldNames.RunAs.Arguments, false);
-            string workingDir = this.GetString(FieldNames.RunAs.WorkingDir, false);
+            string application = this.GetFieldValue(FieldNames.RunAs.Application, false);
+            string arguments = this.GetFieldValue(FieldNames.RunAs.Arguments, false);
+            string workingDir = this.GetFieldValue(FieldNames.RunAs.WorkingDir, false);
             bool isNetOnly = this.GetBool(FieldNames.RunAs.NetOnly);
 
             return new RunAsEntrySettings()
@@ -78,11 +79,11 @@ namespace RunAsPlugin.SafeManagement
         /// <param name="settings">The run as settings for the entry.</param>
         internal void SetRunAsSettings(RunAsEntrySettings settings)
         {
-            this.SetString(FieldNames.RunAs.IsEnabled, settings.IsEnabled);
-            this.SetString(FieldNames.RunAs.Application, settings.Application);
-            this.SetString(FieldNames.RunAs.Arguments, settings.Arguments);
-            this.SetString(FieldNames.RunAs.WorkingDir, settings.WorkingDir);
-            this.SetString(FieldNames.RunAs.NetOnly, settings.IsNetOnly);
+            this.SaveFieldValue(FieldNames.RunAs.IsEnabled, settings.IsEnabled, default(bool).ToString());
+            this.SaveFieldValue(FieldNames.RunAs.Application, settings.Application);
+            this.SaveFieldValue(FieldNames.RunAs.Arguments, settings.Arguments);
+            this.SaveFieldValue(FieldNames.RunAs.WorkingDir, settings.WorkingDir);
+            this.SaveFieldValue(FieldNames.RunAs.NetOnly, settings.IsNetOnly, default(bool).ToString());
         }
 
         /// <summary>
@@ -102,24 +103,35 @@ namespace RunAsPlugin.SafeManagement
         {
             return new ExecutionSettings()
             {
-                FullUsername = this.GetString(FieldNames.Username, true),
+                FullUsername = this.GetFieldValue(FieldNames.Username, true),
                 Password = this.entryStrings.Get(FieldNames.Password),
                 NetOnly = this.GetBool(FieldNames.RunAs.NetOnly),
-                Application = this.GetString(FieldNames.RunAs.Application, true),
-                WorkingDir = this.GetString(FieldNames.RunAs.WorkingDir, true),
-                Arguments = this.GetString(FieldNames.RunAs.Arguments, true)
+                Application = this.GetFieldValue(FieldNames.RunAs.Application, true),
+                WorkingDir = this.GetFieldValue(FieldNames.RunAs.WorkingDir, true),
+                Arguments = this.GetFieldValue(FieldNames.RunAs.Arguments, true)
             };
         }
 
         /// <summary>
         /// Sets a string value on the password entry.
         /// </summary>
+        /// <remarks>
+        /// If the value is the same as the default, the field will be removed.
+        /// </remarks>
         /// <param name="field">The name of the string field.</param>
         /// <param name="value">The value of the string field.</param>
-        private void SetString(string field, object value)
+        /// <param name="defaultValue">The default value of the field. Used to determine if the entry should be removed.</param>
+        private void SaveFieldValue(string field, object value, string defaultValue = "")
         {
-            ProtectedString protectedString = new ProtectedString(false, value.ToString());
-            this.entryStrings.Set(field, protectedString);
+            if (defaultValue.Equals(value.ToString(), System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                this.entryStrings.Remove(field);
+            }
+            else
+            {
+                ProtectedString protectedString = new ProtectedString(false, value.ToString());
+                this.entryStrings.Set(field, protectedString);
+            }
         }
 
         public string ProcessReplacementTags(ProtectedString protectedString)
@@ -133,7 +145,7 @@ namespace RunAsPlugin.SafeManagement
         /// </summary>
         /// <param name="field">The name of the string field.</param>
         /// <returns>The value of the string field.</returns>
-        private string GetString(string field, bool processReplacementTags)
+        private string GetFieldValue(string field, bool processReplacementTags)
         {
             ProtectedString protectedFieldValue = this.entryStrings.Get(field);
             if (protectedFieldValue == null)
@@ -160,7 +172,7 @@ namespace RunAsPlugin.SafeManagement
         {
             bool boolValue;
 
-            string stringValue = this.GetString(field, true);
+            string stringValue = this.GetFieldValue(field, true);
             bool.TryParse(stringValue, out boolValue);
             return boolValue;
         }
